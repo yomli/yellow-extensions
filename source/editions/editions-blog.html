@@ -1,0 +1,75 @@
+<?php $this->yellow->layout("header") ?>
+	<main id="content" class="content">
+		<article class="book">
+			<?php if (!empty($this->yellow->page->get("image"))): ?>
+				<div class="book-cover">
+					<img src="<?= $this->yellow->system->get("coreServerBase").DIRECTORY_SEPARATOR.$this->yellow->system->get("coreImageDirectory").DIRECTORY_SEPARATOR.$this->yellow->page->get("image") ?>" class="fit" loading="lazy"/>
+				</div>
+			<?php endif ?>
+			<section class="book-infos">
+				<h1 class="book-title"><a href="<?= $this->yellow->page->getUrl() ?>"><?= $this->yellow->page->getHtml("TitleContent") ?></a></h1>
+				<?php if (!empty($this->yellow->page->get("subtitle"))): ?>
+				<h2 class="book-subtitle"><?= $this->yellow->page->getHtml("subtitle") ?></h2>
+				<?php endif ?>
+				<?php if (!empty($this->yellow->page->get("collection"))): ?>
+				<h3 class="book-collection"><?= $this->yellow->page->getHtml("collection") ?></h3>
+				<?php endif ?>
+				<?php $authorCounter = 0; foreach (preg_split("/\s*,\s*/", $this->yellow->page->get("author")) as $author) { if (++$authorCounter>1) echo ", "; echo "<p class=\"book-author p-author\" rel=\"author\"><a href=\"".$this->yellow->page->getPage("blog")->getLocation(true).$this->yellow->toolbox->normaliseArguments("author:$author")."\">".htmlspecialchars($author)."</a></p>"; } ?>
+				<div class="book-description">
+					<?php echo $this->yellow->page->getContent() ?>
+				</div>
+			</section>
+			<section class="book-links">
+				<?php if ($this->yellow->page->isExisting("LinksRead")): ?>
+				<div>
+					<h4>Lire</h4>
+					<ul class="list-inline">
+					<?php foreach (preg_split("/\s*\|\s*/", $this->yellow->page->get("LinksRead")) as $link):
+						$link_parts = preg_split("/\s*->\s*/", $link);
+					?>
+						<li><a href="<?= $link_parts[1] ?>"><?= $link_parts[0] ?></a></li>
+					<?php endforeach ?>
+					</ul>
+				</div>
+				<?php endif ?>
+				<?php if ($this->yellow->page->isExisting("LinksPaperback")): ?>
+				<div>
+					<h4>Acheter le livre papier</h4>
+					<ul class="list-inline">
+					<?php foreach (preg_split("/\s*\|\s*/", $this->yellow->page->get("LinksPaperback")) as $link):
+						$link_parts = preg_split("/\s*->\s*/", $link);
+					?>
+						<li><a href="<?= $link_parts[1] ?>"><?= $link_parts[0] ?></a></li>
+					<?php endforeach ?>
+					</ul>
+				</div>
+				<?php endif ?>
+				<?php if ($this->yellow->page->isExisting("LinksEbook")): ?>
+				<div>
+					<h4>Acheter l’eBook</h4>
+					<ul class="list-inline">
+					<?php foreach (preg_split("/\s*\|\s*/", $this->yellow->page->get("LinksEbook")) as $link):
+						$link_parts = preg_split("/\s*->\s*/", $link);
+					?>
+						<li><a href="<?= $link_parts[1] ?>"><?= $link_parts[0] ?></a></li>
+					<?php endforeach ?>
+					</ul>
+				</div>
+				<?php endif ?>
+			</section>
+			<section class="book-details">
+				<?php foreach (preg_split("/\s*\|\s*/", $this->yellow->page->get("details")) as $detail):
+					$detail_parts = preg_split("/\s*->\s*/", $detail);
+				?>
+				<p><?= $detail_parts[0] ?>&nbsp;: <?= $detail_parts[1] ?></p>
+				<?php endforeach ?>
+				<p>Date de parution : <time datetime="<?= $this->yellow->page->getDateFormattedHtml("published", "c") ?>" class="dt-published">
+					<?= $this->yellow->page->getDateFormattedHtml("published", "j F Y") ?>
+					</time></p>
+				<?php if ($this->yellow->page->isExisting("tag")): ?>
+				<p>Tags : <?php $tagCounter = 0; foreach (preg_split("/\s*,\s*/", $this->yellow->page->get("tag")) as $tag) { if (++$tagCounter>1) echo ", "; echo "<a href=\"".$this->yellow->page->getPage("blog")->getLocation(true).$this->yellow->toolbox->normaliseArguments("tag:$tag")."\" class=\"p-category\">".htmlspecialchars($tag)."</a>"; } ?></p>
+				<?php endif ?>
+			</section>
+		</article>
+	</main>
+<?php $this->yellow->layout("footer") ?>

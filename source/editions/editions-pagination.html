@@ -1,0 +1,12 @@
+<?php list($name, $pages) = $this->yellow->getLayoutArguments() ?>
+<?php if ($pages->isPagination()): ?>
+<nav class="pagination" role="navigation">
+<?php if ($pages->getPaginationPrevious()): ?>
+<a class="button button--flat" href="<?= $pages->getPaginationPrevious() ?>"><?= $this->yellow->language->getTextHtml("corePaginationPrevious") ?></a>
+<?php endif ?>
+<?php if ($pages->getPaginationNext()): ?>
+<a class="button button--flat" href="<?= $pages->getPaginationNext() ?>"><?= $this->yellow->language->getTextHtml("corePaginationNext") ?></a>
+<?php endif ?>
+</nav>
+<?php endif ?>
+		

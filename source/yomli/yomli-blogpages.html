@@ -1,0 +1,49 @@
+<?php $this->yellow->layout("header") ?>
+<main id="content" class="content" role="main">
+	<?php if (!empty($this->yellow->page->get("titleContent"))): ?>
+	<h2 class="content-title"><?= $this->yellow->page->getHtml("titleContent") ?></h2>
+	<?php elseif (!empty($this->yellow->page->get("title"))): ?>
+	<h2 class="content-title"><?= $this->yellow->page->getHtml("title") ?></h2>
+	<?php endif ?>
+
+	<?php foreach ($this->yellow->page->getPages("blog") as $page): ?>
+	<article class="blog-post h-entry">
+			<header>
+				<?php if (!empty($page->get("image"))): ?>
+				<div class="post-cover">
+					<img src="<?= $this->yellow->system->get("coreServerBase").DIRECTORY_SEPARATOR.$this->yellow->system->get("coreImageDirectory")."cover/". $page->get("image") ?>" class="fit" loading="lazy"/>
+				</div>
+				<?php endif ?>
+				<h1 class="post-title p-name"><a href="<?= $page->getLocation(true) ?>" class="post-link"><?= $page->get("TitleContent") ?></a></h1>
+				<?php if (!empty($page->get("subtitle"))): ?>
+				<h2 class="post-subtitle"><?= $page->get("subtitle") ?></h2>
+				<?php endif ?>
+				<p class="post-meta">
+					<?php if ($page->isExisting("tag")): ?>
+					<span class="p-category">
+					<?php $tagCounter = 0; foreach (preg_split("/\s*,\s*/", $page->get("tag")) as $tag) { if (++$tagCounter>1) echo ", "; echo htmlspecialchars($tag); } ?>
+					</span>
+					&nbsp;–&nbsp;
+					<?php endif ?>
+					<time datetime="<?= $page->getDateFormattedHtml("published", "c") ?>" class="dt-published">
+					<?= $page->getDateFormattedHtml("published", "j F Y") ?>
+					</time>
+				</p>
+			</header>
+			<p class="post-description p-summary">
+			<?php if (!empty($page->get("description"))): ?>
+				<?= $page->get("description") ?>		
+			<?php else: ?>
+				<?= $this->yellow->toolbox->createTextDescription($page->getContent(), 0, true, "<!--more-->", "") ?>
+			<?php endif ?>
+			</p>
+			<a href="<?= $page->getLocation(true) ?>" aria-label="Lire la suite" class="stretched-link post-link u-url">Lire la suite</a>
+	</article>
+	<?php endforeach ?>
+
+	<?php $this->yellow->layout("pagination", $this->yellow->page->getPages("blog")) ?>
+
+	<?php $this->yellow->layout("sidebar") ?>
+
+</main>
+<?php $this->yellow->layout("footer") ?>

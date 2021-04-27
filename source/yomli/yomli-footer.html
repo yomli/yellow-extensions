@@ -1,0 +1,21 @@
+	<footer class="footer" role="contentinfo">
+		<?= $this->yellow->page->getPage("footer")->getContent() ?>
+		<ul class="list-inline footer-links">
+			<?php if($this->yellow->extension->isExisting("yomli")): ?>
+			<?php 
+				$locationFeed = $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("yomliFeedLocation");
+				$locationFeed .= $this->yellow->toolbox->normaliseArguments("page:".$this->yellow->system->get("yomliFeedFileXml"), false); 
+			?>
+			<li><a href="<?= $locationFeed ?>" role="button">Flux RSS</a></li>
+			<?php endif ?>
+			<li><a href="<?= $this->yellow->page->getBase(true) ?>/mentions-legales" role="button">Mentions légales</a></li>
+			<li><a href="<?= $this->yellow->page->getBase(true) ?>/contact" role="button">Contact</a></li>
+		</ul>
+	</footer>
+
+	<div class="scroller">
+		<a href="#" class="scroller-link rounded-circle raised" role="button" aria-label="Retour en haut"></a>
+	</div>
+
+</body>
+</html>

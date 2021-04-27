@@ -1,0 +1,49 @@
+	<aside class="sidebar">
+		<figure class="profile-picture">
+			<?php if ($this->yellow->page->get("layout") != "profile"): ?>
+			<a href="<?= $this->yellow->page->getBase(true) ?>" class="h-card u-url" title="À propos">
+			<?php else: ?>
+			<a href="<?= $this->yellow->system->get("coreServerBase") . DIRECTORY_SEPARATOR . $this->yellow->system->get("coreDownloadDirectory") ?>contact-yomli.vcf" title="Ajouter aux contacts">
+			<?php endif ?>
+				<img src="<?= $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("CoreThemeLocation") ?>assets/img/profil-yomli.png" class="avatar animated-raised u-photo photo">
+			</a>
+			<figcaption class="profile-handle"><?= $this->yellow->system->getHtml("author") ?></figcaption>
+		</figure>
+
+		<p class="profile-bio"><?= $this->yellow->page->getPage("sidebar")->get("description") ?></p>
+
+		<?php if ($this->yellow->page->getPage("sidebar")->isExisting("links")): ?>
+		<ul class="list-unstyled profile-links">
+		<?php 	foreach (preg_split("/\s*\|\s*/", $this->yellow->page->getPage("sidebar")->get("links")) as $link):
+					$link_parts = preg_split("/\s*->\s*/", $link);
+		?>
+			<li><a href="<?= $link_parts[1] ?>" class="button is-primary animated-raised"><?= $link_parts[0] ?></a></li>
+		<?php endforeach ?>
+		</ul>
+		<?php endif ?>
+
+		<?= $this->yellow->page->getPage("sidebar")->getContent() ?>
+
+		<?php if ($this->yellow->page->get("layout") == "blogpages"): ?>
+		<div>
+			<h4>Rubriques</h4>
+			<ul class="list-unstyled blog-tags">
+				<?php 
+					$tags = $this->yellow->extension->get("blog")->getMeta(
+						$this->yellow->extension->get("blog")->getBlogPages(
+							$this->yellow->system->get("BlogLocation")
+						), "tag");
+					ksort($tags);
+					foreach ($tags as $tag => $count): 
+				?>
+					<li><a href="<?= $this->yellow->page->getUrl("blog").$this->yellow->toolbox->normaliseArguments("tag:$tag") ?>"><?= htmlspecialchars($tag) ?></a>&nbsp;(<?= $count ?>)</li>
+				<?php endforeach ?>
+			</ul>
+			<h4>S’abonner</h4>
+			<ul class="list-inline">
+				<li><a href="/feed/page:articles.xml" class="button animated-raised">RSS</a></li>
+				<li><a href="http://eepurl.com/hwRGAD" class="button animated-raised">Email</a></li>
+			</ul>
+		</div>
+		<?php endif ?>
+	</aside>

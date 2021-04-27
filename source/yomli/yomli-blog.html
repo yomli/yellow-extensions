@@ -1,0 +1,28 @@
+<?php $this->yellow->layout("header") ?>
+	<main id="content" class="content h-entry">
+		<article class="post e-content">
+			<header class="post-header">
+				<p class="post-meta">
+					<?php if ($this->yellow->page->isExisting("tag")): ?>
+					<?php $tagCounter = 0; foreach (preg_split("/\s*,\s*/", $this->yellow->page->get("tag")) as $tag) { if (++$tagCounter>1) echo ", "; echo "<a href=\"".$this->yellow->page->getPage("blog")->getLocation(true).$this->yellow->toolbox->normaliseArguments("tag:$tag")."\" class=\"p-category\">".htmlspecialchars($tag)."</a>"; } ?>
+					&nbsp;–&nbsp;
+					<?php endif ?>
+					<time datetime="<?= $this->yellow->page->getDateFormattedHtml("published", "c") ?>" class="dt-published">
+					<?= $this->yellow->page->getDateFormattedHtml("published", "j F Y") ?>
+					</time>
+				</p>
+				<?php if (!empty($this->yellow->page->get("image"))): ?>
+				<img src="<?= $this->yellow->system->get("coreServerBase").DIRECTORY_SEPARATOR.$this->yellow->system->get("coreImageDirectory")."cover/". $this->yellow->page->get("image") ?>" alt="<?= $this->yellow->page->get("ImageAlt") ?>" class="post-cover" />
+				<?php else: ?>
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mMU+g8AASkBE945rRMAAAAASUVORK5CYII=" class="post-cover" />
+				<?php endif ?>
+				<h1 class="post-title p-name"><?= $this->yellow->page->get("TitleContent") ?></h1>
+				<?php if (!empty($this->yellow->page->get("subtitle"))): ?>
+				<h2 class="post-subtitle"><?= $this->yellow->page->get("subtitle") ?></h2>
+				<?php endif ?>
+				<?php $authorCounter = 0; foreach (preg_split("/\s*,\s*/", $this->yellow->page->get("author")) as $author) { if (++$authorCounter>1) echo ", "; echo "<p class=\"author p-author\" rel=\"author\"><a href=\"".$this->yellow->page->getPage("blog")->getLocation(true).$this->yellow->toolbox->normaliseArguments("author:$author")."\">".htmlspecialchars($author)."</a></p>"; } ?>
+			</header>
+			<?php echo $this->yellow->page->getContent() ?>
+		</article>
+	</main>
+<?php $this->yellow->layout("footer") ?>

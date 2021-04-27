@@ -1,0 +1,11 @@
+<?php $pages = $this->yellow->content->top() ?>
+<?php $this->yellow->page->setLastModified($pages->getModified()) ?>
+			<ul class="list-unstyled navbar-menu" role="navigation">
+				<?php foreach ($pages as $page): ?>
+				<li<?= $page->isActive() ? " class=\"active\" aria-current=\"page\"" : "" ?>><a href="<?= $page->getLocation(true) ?>"><?= $page->getHtml("titleNavigation") ?></a></li>
+				<?php endforeach ?>
+				<li><a href="<?= $this->yellow->page->getBase(true) ?>/microblog/">Microblog</a></li>
+				<li><a href="https://editions.yom.li/">Édition</a></li>
+				<li><a href="https://dev.yom.li/">Développement</a></li>
+				<li><button type="button" class="color-scheme-toggle rounded-circle"></button></li>
+			</ul>

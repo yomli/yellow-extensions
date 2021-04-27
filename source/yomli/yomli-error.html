@@ -1,0 +1,10 @@
+<?php $this->yellow->layout("header") ?>
+<main id="content" class="content" role="main">
+		<article class="static">
+			<header>
+				<h2><?= $this->yellow->page->getHtml("titleContent") ?></h2>
+			</header>
+			<?= $this->yellow->page->getContent() ?>
+		</article>
+</main>
+<?php $this->yellow->layout("footer") ?>

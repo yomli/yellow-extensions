@@ -1,0 +1,107 @@
+<?php $this->yellow->layout("header") ?>
+<main id="content" class="content" role="main">
+		
+		<?php $this->yellow->layout("sidebar") ?>
+
+		<?php $tabs = $this->yellow->page->getChildren() ?>
+		<?php if (count($tabs) > 0): ?>
+		<div class="tabs card">
+			<input id="tab-1" name="tabs" class="tab-input" checked="checked" type="radio" />
+			<label for="tab-1" class="tab" role="tab" aria-selected="false" aria-controls="tab-panel-1" aria-expanded="false" tabindex="0"><?= $this->yellow->page->getHtml("title") ?></label>
+			<section class="tab-panel" id="tab-panel-1" role="tabpanel" aria-labelledby="specification" aria-hidden="true">
+		<?php else: ?>
+		<div class="card">
+		<?php endif ?>
+
+			<h3><?= $this->yellow->page->getHtml("titleContent") ?></h3>
+			<?= $this->yellow->page->getContent() ?>
+
+			<?php if (count($tabs) > 0): ?>
+			</section>
+			<?php endif ?> 
+
+			<?php 
+				$i = 1;
+				foreach ($tabs as $tab):
+				$i++; ?>
+			<input id="tab-<?= $i ?>" name="tabs" class="tab-input" type="radio" />
+			<label for="tab-<?= $i ?>" class="tab" role="tab" aria-selected="false" aria-controls="tab-panel-<?= $i ?>" aria-expanded="false" tabindex="0"><?= $tab->getHtml("title") ?></label>
+			<section class="tab-panel" id="tab-panel-<?= $i ?>" role="tabpanel" aria-labelledby="specification" aria-hidden="true">
+
+			<h3><?= $tab->getHtml("titleContent") ?></h3>
+			<?= $tab->getContent() ?>
+
+			</section>
+			<?php endforeach ?>
+		</div>
+</main>
+<!-- Form submit -->
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+
+		var contact = document.getElementById('contact-form');
+		var formStatus = document.getElementById('contact-submit');
+
+		document.getElementsByTagName('form')[0].addEventListener('submit', (e) => {
+			e.preventDefault();
+
+			formStatus.value = 'Envoi du message…';
+
+			let form = e.target;
+
+			var xhr = new XMLHttpRequest();
+			xhr.open(form.method, form.action, true);
+			//xhr.setRequestHeader('Accept', 'application/json; charset=utf-8');
+			//xhr.setRequestHeader('Content-Type', 'application/x-form-urlencoded');
+
+			//console.log(JSON.parse(JSON.stringify(Object.fromEntries(new FormData(form)))));
+
+			xhr.send(new FormData(form));
+
+			xhr.onloadend = function (response) {
+				formStatus.value = response.target.responseText;
+				if (response.target.status === 0) {
+					// Failed XmlHttpRequest should be considered an undefined error.
+					formStatus.value = 'Erreur inconnue';
+					formStatus.className += ' is-alert';
+				} else if (response.target.status === 400) {
+					// Bad Request
+					formStatus.className += ' is-danger';
+				} else if (response.target.status === 200) {
+					// Success
+					formStatus.className += ' is-success';
+				}
+			};
+        });
+      });
+</script>
+
+<!-- https://microformats.org/wiki/h-card -->
+<div style="display:none" class="vcard h-card">
+	<a class="url uid u-url u-uid fn nickname p-name p-nickname" href="<?= $this->yellow->page->scheme."://".$this->yellow->page->address."/" ?>"><?= $this->yellow->page->getHtml("author") ?></a>
+	<img src="<?= $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("CoreThemeLocation") ?>assets/img/profil-yomli.png" class="u-photo photo">
+	<?php if ($this->yellow->page->isExisting("h-card-rel")): ?>
+	<?php 	foreach (preg_split("/\s*\|\s*/", $this->yellow->page->get("h-card-rel")) as $link):
+					$link_parts = preg_split("/\s*->\s*/", $link);
+		?>
+	<a href="<?= $link_parts[1] ?>" rel="me" class="url u-url"><?= $link_parts[0] ?></a>
+	<?php endforeach ?>
+	<?php endif ?>
+	<span class="given-name p-given-name">Guillaume</span>
+	<span class="family-name p-family-name">Litaudon</span>
+	<span class="bday dt-bday">--06-09</span>
+	<span class="p-sex">M</span>
+	<span class="tel p-tel">+33616554424</span>
+	<a class="org p-org h-card" href="https://editions.yom.li/">Éditions Yomli</a>
+	<span class="title p-job-title">Éditeur multimédia</span>
+	<div class="adr">
+		<span class="street-address p-street-address"></span>
+		<span class="p-extended-address"></span>
+		<span class="postal-code p-postal-code">86000</span>
+		<span class="locality p-locality">Poitiers</span>
+		<span class="country-name p-country-name">France</span>
+	</div>
+	<a class="u-key" href="https://yom.li/pubkey.txt">0xb483a55d3af111c4</a>
+	<p class="p-note">Maître philosophe, modeste éditeur, geek à ses heures et parfois développeur web. Aime le thé noir et le riz cantonnais.</p>
+</div>
+<?php $this->yellow->layout("footer") ?>

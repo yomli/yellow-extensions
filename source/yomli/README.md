@@ -1,4 +1,4 @@
-Yomli 0.8.21.1
+Yomli 0.8.21.2
 ==============
 
 Yomli is an advanced theme for [Datenstrom Yellow](https://datenstrom.se/yellow/) using [Croissant](https://github.com/yomli/croissant/). It is in use here: <https://yom.li/>

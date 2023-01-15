@@ -5,7 +5,7 @@
 :root .color-scheme-dark,
 :root .color-scheme-light {
 	--primary-color: var(--green-color);
-	--selection-color: rgba(0,113,173,.3);
+	--selection-color: rgba(73,146,89,.3);
 }
 
 

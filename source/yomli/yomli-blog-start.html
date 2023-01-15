@@ -6,7 +6,7 @@
 	<h2 class="content-title"><?= $this->yellow->page->getHtml("title") ?></h2>
 	<?php endif ?>
 
-	<?php foreach ($this->yellow->page->getPages("blog") as $page): ?>
+	<?php foreach ($this->yellow->page->getPages("blog")->paginate($this->yellow->system->get("blogPaginationLimit")) as $page): ?>
 	<article class="blog-post h-entry">
 			<header>
 				<?php if (!empty($page->get("image"))): ?>
@@ -32,7 +32,7 @@
 			</header>
 			<p class="post-description p-summary">
 			<?php if (!empty($page->get("description"))): ?>
-				<?= $page->get("description") ?>		
+				<?= $page->get("description") ?>
 			<?php else: ?>
 				<?= $this->yellow->toolbox->createTextDescription($page->getContent(), 0, true, "<!--more-->", "") ?>
 			<?php endif ?>

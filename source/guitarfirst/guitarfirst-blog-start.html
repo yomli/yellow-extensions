@@ -1,0 +1,43 @@
+<?php $this->yellow->layout("header") ?>
+<?php
+	$yellowThemeLocation = $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("CoreThemeLocation");
+?>
+<main id="content" class="content" role="main">
+
+	<section class="page">
+		<header>
+			<?php if (!empty($this->yellow->page->get("titleContent"))): ?>
+			<h1 class="content-title"><?= $this->yellow->page->getHtml("titleContent") ?></h1>
+			<?php elseif (!empty($this->yellow->page->get("title"))): ?>
+			<h1 class="content-title"><?= $this->yellow->page->getHtml("title") ?></h1>
+	<?php endif ?>
+		</header>
+
+		<?php foreach ($this->yellow->page->getPages("blog")->paginate($this->yellow->system->get("blogPaginationLimit")) as $page): ?>
+		<article class="post card e-content">
+					<header class="post-header">
+						<h1 class="post-title p-name"><a href="<?= $page->getLocation(true) ?>" class="post-link"><?= $page->get("TitleContent") ?></a></h1>
+						<p class="post-avatar">
+							<a href="<?= $page->getLocation(true) ?>" title="Permalien">
+								<img class="rounded-circle animated-raised u-photo photo" src="<?= $yellowThemeLocation ?>assets/img/profil-eric.jpg">
+							</a>
+						</p>
+						<p class="author p-author" rel="author"><a href="<?= $page->getLocation(true) ?>" title="Permalien"><?= $page->getHtml("author") ?></a></p>
+						<p class="post-date"><time datetime="<?= $page->getDateFormattedHtml("published", "c") ?>" class="dt-published">
+							<?= $page->getDateFormattedHtml("published", "j F Y") ?>
+						</time></p>
+					</header>
+					<div class="post-content">
+						<?= $page->getContent(false) ?>
+					</div>
+				</article>
+		<?php endforeach ?>
+
+		<?php $this->yellow->layout("pagination", $this->yellow->page->getPages("blog")) ?>
+
+	</section>
+
+	<?php $this->yellow->layout("sidebar") ?>
+
+</main>
+<?php $this->yellow->layout("footer") ?>

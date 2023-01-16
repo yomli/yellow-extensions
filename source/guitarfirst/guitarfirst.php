@@ -1,18 +1,18 @@
 <?php
 // Basic extension, https://github.com/schulle4u/yellow-extension-basic
 
-class YellowDev {
+class Yellowguitarfirst {
     const VERSION = "0.8.21.1";
     public $yellow;         // access to API
 
     // Handle initialisation
     public function onLoad($yellow) {
         $this->yellow = $yellow;
-        $this->yellow->system->setDefault("devFeedLocation", "/feed/");
-        $this->yellow->system->setDefault("devFeedTitle", "RSS feed: Blog");
-        $this->yellow->system->setDefault("devFeedFileXml", "blog.xml");
-        $this->yellow->system->setDefault("devFeedFilterLayout", "blog");
-        $this->yellow->system->setDefault("devFeedPaginationLimit", "30");
+        $this->yellow->system->setDefault("guitarfirstFeedLocation", "/feed/");
+        $this->yellow->system->setDefault("guitarfirstFeedTitle", "RSS feed: Actualités");
+        $this->yellow->system->setDefault("guitarfirstFeedFileXml", "news.xml");
+        $this->yellow->system->setDefault("guitarfirstFeedFilterLayout", "blog");
+        $this->yellow->system->setDefault("guitarfirstFeedPaginationLimit", "30");
     }
 
     //==================================
@@ -55,7 +55,7 @@ class YellowDev {
                             "5/8" => "⅝",
                             "7/8" => "⅞");
 
-        $tagsToSkip = "pre|code|kbd|samp|script|style|math";
+        $tagsToSkip = "pre|code|kbd|samp|script|style|math|a";
         $regexSkip = "(?:(?:(?s)<(?:".$tagsToSkip.")[^<]*>.*?<\/(?:".$tagsToSkip.")>)|(?:<.*?>))(*SKIP)(*F)|";
 
         $output = $text;
@@ -178,12 +178,12 @@ class YellowDev {
                 $pages->match("#".$page->getRequest("folder")."#i", false);
                 array_push($pagesFilter, ucfirst($page->getRequest("folder")));
             }
-            $feedFilterLayout = $this->yellow->system->get("devFeedFilterLayout");
+            $feedFilterLayout = $this->yellow->system->get("guitarfirstFeedFilterLayout");
             if ($feedFilterLayout!="none") $pages->filter("layout", $feedFilterLayout);
-            $chronologicalOrder = ($this->yellow->system->get("devFeedFilterLayout")!="blog");
+            $chronologicalOrder = ($this->yellow->system->get("guitarfirstFeedFilterLayout")!="blog");
             if ($this->isRequestXml($page)) {
                 $pages->sort($chronologicalOrder ? "modified" : "published", false);
-                $entriesMax = $this->yellow->system->get("devFeedPaginationLimit");
+                $entriesMax = $this->yellow->system->get("guitarfirstFeedPaginationLimit");
                 if ($entriesMax==0 || $entriesMax>100) $entriesMax = 100;
                 $pages->limit($entriesMax);
                 $title = !is_array_empty($pagesFilter) ? implode(" ", $pagesFilter)." - ".$this->yellow->page->get("sitename") : $this->yellow->page->get("sitename");
@@ -192,7 +192,7 @@ class YellowDev {
                 $output = "<?xml version=\"1.0\" encoding=\"UTF-8\"\077>\r\n";
                 $output .= "<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\r\n";
                 $output .= "<channel>\r\n";
-                $output .= "<atom:link href=\"".$this->yellow->page->getUrl().$this->yellow->lookup->normaliseArguments("page:".$this->yellow->system->get("devFeedFileXml"), false)."\" rel=\"self\" type=\"application/rss+xml\" />";
+                $output .= "<atom:link href=\"".$this->yellow->page->getUrl().$this->yellow->lookup->normaliseArguments("page:".$this->yellow->system->get("guitarfirstFeedFileXml"), false)."\" rel=\"self\" type=\"application/rss+xml\" />";
                 $output .= "<title>".htmlspecialchars($title)."</title>\r\n";
                 $output .= "<link>".$this->yellow->page->scheme."://".$this->yellow->page->address.$this->yellow->page->base."/"."</link>\r\n";
                 $output .= "<description><![CDATA[".$this->yellow->page->getHtml("description")."]]></description>\r\n";
@@ -239,8 +239,8 @@ class YellowDev {
     public function onParsePageExtra($page, $name) {
         $output = null;
         if ($name=="header") {
-            $locationFeed = $this->yellow->system->get("coreServerBase").$this->yellow->system->get("devFeedLocation");
-            $locationFeed .= $this->yellow->lookup->normaliseArguments("page:".$this->yellow->system->get("devFeedFileXml"), false);
+            $locationFeed = $this->yellow->system->get("coreServerBase").$this->yellow->system->get("guitarfirstFeedLocation");
+            $locationFeed .= $this->yellow->lookup->normaliseArguments("page:".$this->yellow->system->get("guitarfirstFeedFileXml"), false);
             $output = "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"$locationFeed\" />\n";
         }
         return $output;
@@ -248,7 +248,7 @@ class YellowDev {
 
     // Check if XML requested
     public function isRequestXml($page) {
-        return $page->getRequest("page")==$this->yellow->system->get("devFeedFileXml");
+        return $page->getRequest("page")==$this->yellow->system->get("guitarfirstFeedFileXml");
     }
 
     //==================================
@@ -260,8 +260,8 @@ class YellowDev {
             $urlBase = $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("CoreThemeLocation") . "assets/php/email.php";
             $output = "<div class=\"".htmlspecialchars($name)."\">\n";
             $output .= "<form class=\"contact-form\" id=\"contact-form\" action=\"".$urlBase."\" method=\"post\">\n";
-            $output .= "<p class=\"contact-name\"><label for=\"name\">Nom</label><br /><input type=\"text\" class=\"input-alternate\" name=\"name\" id=\"name\" value=\"\" placeholder=\"Spike Spiegel\" /></p>\n";
-            $output .= "<p class=\"contact-from\"><label for=\"from\">Email</label><br /><input type=\"email\" class=\"input-alternate\" name=\"from\" id=\"from\" value=\"\" placeholder=\"spike@bebop.jp\" /></p>\n";
+            $output .= "<p class=\"contact-name\"><label for=\"name\">Nom</label><br /><input type=\"text\" class=\"input-alternate\" name=\"name\" id=\"name\" value=\"\" placeholder=\"Phil Lynott\" /></p>\n";
+            $output .= "<p class=\"contact-from\"><label for=\"from\">Email</label><br /><input type=\"email\" class=\"input-alternate\" name=\"from\" id=\"from\" value=\"\" placeholder=\"theboys@backin.com\" /></p>\n";
             $output .= "<p class=\"contact-message\"><label for=\"message\">Message</label><br /><textarea name=\"message\" id=\"message\" rows=\"7\" cols=\"70\"></textarea></p>\n";
             $output .= "<p class=\"contact-consent\"><input type=\"checkbox\" name=\"consent\" value=\"consent\" id=\"consent\"> <label for=\"consent\">".$this->yellow->language->getTextHtml("contactConsent")."</label></p>\n";
             $output .= "<input type=\"hidden\" name=\"referer\" value=\"".$page->getUrl()."\" />\n";
@@ -282,9 +282,9 @@ class YellowDev {
     public function onUpdate($action) {
         $fileName = $this->yellow->system->get("coreExtensionDirectory").$this->yellow->system->get("coreSystemFile");
         if ($action=="install") {
-            $this->yellow->system->save($fileName, array("theme" => "dev"));
-        } elseif ($action=="uninstall" && $this->yellow->system->get("theme")=="dev") {
-            $theme = reset(array_diff($this->yellow->system->getValues("theme"), array("dev")));
+            $this->yellow->system->save($fileName, array("theme" => "guitarfirst"));
+        } elseif ($action=="uninstall" && $this->yellow->system->get("theme")=="guitarfirst") {
+            $theme = reset(array_diff($this->yellow->system->getValues("theme"), array("guitarfirst")));
             $this->yellow->system->save($fileName, array("theme" => $theme));
         }
     }

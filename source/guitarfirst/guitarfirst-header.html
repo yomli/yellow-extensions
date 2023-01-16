@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="<?= $this->yellow->page->getHtml("language") ?>">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+	<title><?= $this->yellow->page->getHtml("titleHeader") ?></title>
+	<meta name="description" content="<?= $this->yellow->page->getHtml("description") ?>" />
+	<meta name="author" content="<?= $this->yellow->page->getHtml("author") ?>" />
+	<meta name="generator" content="Datenstrom Yellow" />
+
+	<?php
+		$yellowThemeLocation = $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("CoreThemeLocation");
+	?>
+
+	<!-- Favicons -->
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="manifest" href="/manifest.webmanifest">
+
+	<!-- Apple Web App Meta -->
+	<link rel="apple-touch-icon" sizes="180x180" href="<?= $yellowThemeLocation ?>assets/favicon/apple-touch-icon.png">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- Microsoft Tiles -->
+	<meta name="msapplication-TileColor" content="#6D37A3">
+    <meta name="theme-color" content="#6D37A3">
+
+    <link type="text/plain" rel="author" href="/humans.txt" />
+
+	<?= $this->yellow->page->getExtra("header") ?>
+
+	<!-- Javascript -->
+	<noscript>
+		<style>
+			.color-scheme-toggle { display: none; }
+		</style>
+	</noscript>
+</head>
+<body class="layout template-<?= $this->yellow->page->get("layout") ?>">
+
+	<header class="header" role="banner">
+		<nav class="navbar">
+			<h1 class="navbar-brand">
+				<a href="<?= $this->yellow->page->getBase(true)."/" ?>">
+					<img src="<?= $yellowThemeLocation ?>assets/img/guitarfirst-ericlitaudon.png" alt="<?= $this->yellow->page->getHtml("sitename") ?>" width="90">
+				</a>
+			</h1>
+
+			<!-- Bad semantic but pure CSS -->
+			<input type="checkbox" id="navigation-burger" class="navbar-burger" aria-hidden="true">
+			<label for="navigation-burger" class="navbar-burger">
+				<span class="navbar-burger-bun"></span>
+			</label>
+
+			<?php $this->yellow->layout("navigation") ?>
+		</nav>
+	</header>

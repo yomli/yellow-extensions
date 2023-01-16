@@ -1,0 +1,406 @@
+:root {
+	--navbar-color: #1E1E1E;
+	--navbar-color-hover: #313131;
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--blue-color: #6D37A3;
+		--selection-color: rgba(109,55,163,.4);
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--blue-color: #9F70CF;
+		--selection-color: rgba(159,112,207,.4);
+	}
+}
+
+/*********************
+ *    HEADER
+ ********************/
+.header {
+	position: sticky;
+	top: 0;
+	z-index: 9999;
+}
+
+.navbar {
+	background: var(--navbar-color);
+	color: rgba(255,255,255,0.8);
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-menu {
+	background: var(--navbar-color);
+	padding-top: 4.5rem;
+}
+
+.navbar-menu > * {
+	margin-bottom: 0.5rem;
+}
+
+.navbar-menu .active,
+.navbar-menu a:hover,
+.navbar-menu a:focus,
+.navbar-menu a:active {
+	background-color: var(--navbar-color-hover);
+	box-shadow: inset 0 0 0 0;
+	color: #FAFAFA;
+	border-radius: 3px;
+}
+
+@media screen and (min-width: 44rem) {
+	.navbar-menu {
+		padding-top: 0;
+		border-bottom: none;
+	}
+	.navbar-menu > * {
+		margin-bottom: 0;
+	}
+}
+
+@media screen and (min-width: 52rem) {
+	.navbar-menu > * {
+		margin-left: 0.5rem;
+	}
+}
+
+/*********************
+ *   CONTENT
+ ********************/
+.content {
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: auto;
+}
+
+.content .page,
+.content .sidebar {
+	padding: 1rem;
+}
+
+.content .sidebar {
+	grid-row-start: 1;
+	justify-self: center;
+}
+
+.page h1 {
+	font-size: 2rem;
+	font-weight: 500;
+}
+
+/* Because they WILL break your page, right? */
+body:not(.template-blog-start) .page img,
+.post-content img {
+	max-width: 100%;
+	height: auto;
+	margin-bottom: 0.5rem;
+}
+
+@media screen and (min-width: 44rem) {
+	.content {
+		grid-template-columns: 1fr auto;
+		grid-template-areas: "page sidebar";
+	}
+	.content .page {
+		grid-area: page;
+		background: var(--background-color);
+		padding-right: 0.5rem;
+	}
+	.content .sidebar {
+		grid-area: sidebar;
+		background: var(--background-color);
+		padding-left: 0.5rem;
+		min-width: 12rem;
+	}
+}
+
+@media screen and (min-width: 75rem) {
+	.content {
+		grid-template-columns: 20% 3fr auto;
+		grid-template-areas: ". page sidebar";
+
+		background-color: #1F2523;
+		background-image: url("./assets/img/guitar.png"), radial-gradient(circle at center, #3F422F 0%, #1F2523 100%);
+		background-attachment: fixed, scroll;
+		background-repeat: no-repeat, repeat;
+		background-size: 22%, cover;
+	}
+	.content .page,
+	.content .sidebar {
+		padding: 1rem 2rem;
+		min-width: 12rem;
+	}
+	.content .page {
+		padding-right: 1rem;
+		box-shadow: -2px 0 2px rgba(0, 0, 0, 0.3);
+	}
+	.content .sidebar {
+		padding-left: 1rem;
+	}
+}
+
+/*********************
+ *   CONTENT BLOG
+ ********************/
+@media screen and (min-width: 66rem) {
+	.template-blog-start .page {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(40%, 33rem));
+		align-content: start;
+		grid-column-gap: 1rem;
+	}
+	.template-blog-start .page > *:first-child,
+	.template-blog-start .pagination {
+		grid-column-start: span 2;
+	}
+}
+
+.template-blog-start .post {
+	margin-bottom: 1rem;
+}
+
+.template-blog-start .pagination {
+	text-align: center;
+}
+
+.template-blog-start .banner {
+	height: auto;
+	width: 100%;
+	margin-bottom: 1rem;
+	border-radius: 3px;
+}
+
+.post-header {
+	display: grid;
+	grid-template-rows: repeat(2, fit-content);
+	grid-template-columns: min-content auto;
+	grid-column-gap: 1rem;
+	margin-bottom: 1rem;
+	align-items: center;
+}
+
+.post-header > * {
+	margin: 0;
+}
+
+.post-header .post-avatar {
+	grid-row-start: span 2;
+}
+
+.post-avatar img {
+	max-height: 2.5rem;
+	max-width: 2.5rem;
+}
+
+.post-title {
+	display: none;
+}
+
+.post-date {
+	opacity: 0.8;
+	font-size: 80%;
+}
+
+.post .author {
+	font-weight: bold;
+}
+
+/*********************
+ *   FOOTER
+ ********************/
+.footer {
+	background-color: var(--background-color-close);
+	box-shadow: 0 -2px 4px -1px rgba(0,0,0,0.3);
+	opacity: 0.8;
+	display: grid;
+	grid-template-rows: repeat(3, auto);
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 1rem;
+	justify-items: center;
+	align-items: start;
+	padding: 1rem;
+	font-size: 87.5%;
+}
+
+.footer > *:first-child {
+	grid-column-start: span 2;
+}
+
+.footer h2 {
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+.footer img {
+	width: 25%;
+	margin-bottom: 1rem;
+}
+
+.footer p {
+	margin-bottom: 0;
+}
+
+.footer .center {
+	text-align: center;
+}
+
+.footer a {
+	color: currentColor;
+}
+
+.footer .footer-copyright {
+	grid-column-start: span 2;
+	text-align: center;
+	font-size: 80%;
+}
+
+@media screen and (min-width: 44rem) {
+	.footer {
+		grid-template-rows: repeat(2, auto);
+		grid-template-columns: repeat(3, 1fr);
+	}
+	.footer > *:first-child {
+		grid-column-start: 1;
+	}
+	.footer .footer-copyright {
+		grid-column-start: span 3;
+	}
+}
+
+/*********************
+ *   CAROUSEL
+ ********************/
+.carousel {
+	margin-bottom: 1rem;
+	height: 12rem;
+	overflow: hidden;
+	width: 100%;
+}
+
+.carousel-element {
+	height: 12rem;
+	text-align: center;
+	width: 100%;
+}
+
+.carousel-element img {
+	height: 12rem;
+	width: auto;
+}
+
+.carousel-list {
+	animation: carousel 8s ease-in-out infinite;
+}
+
+@keyframes carousel {
+	0%, 20% { transform: translateY(0) }
+	25%, 45% { transform: translateY(-12rem) }
+	50%, 70% { transform: translateY(-24rem) }
+	75%, 95% { transform: translateY(-36rem) }
+}
+
+/*********************
+ *   CONTACT
+ ********************/
+
+.contact-form {
+	max-width: 30rem;
+}
+
+/*********************
+ *   IMG
+ ********************/
+
+img.right {
+	float: right;
+	margin-left:  1rem;
+}
+
+img.left {
+	float: left;
+	margin-right: 1rem;
+}
+
+img.fit,
+figure {
+	display: block;
+	margin: 0 0 2em;
+	width: 100%;
+}
+figcaption {
+	text-align: center;
+}
+
+table {
+	width: 100%;
+}
+
+
+/*********************
+ *   GALLERY
+ ********************/
+
+.photoswipe {
+column-count: 3;
+max-width: 74rem;
+}
+
+.photoswipe {
+	padding:1rem 1rem 1rem 0;
+	column-count:1
+}
+.photoswipe img {
+	width:100%
+}
+
+@media (min-width: 32rem) {
+	.photoswipe {
+		column-count:2;
+		max-width:55rem
+	}
+}
+@media (min-width: 56rem) {
+	.photoswipe {
+		column-count:3;
+		max-width:74rem
+	}
+}
+
+
+
+/*********************
+ *   YELLOW
+ ********************/
+
+.yellow-bar {
+	position: absolute !important;
+	top: 5rem;
+	width: 100%;
+	z-index: 99999;
+}
+
+.yellow-bar-content {
+	display: flex;
+}
+
+.yellow-bar-left,
+.yellow-bar-right {
+	background-color: #fff;
+	padding: 0.5rem 1rem;
+	border-radius: 3px;
+}
+
+.yellow-bar-left {
+	align-self: flex-start;
+}
+
+.yellow-bar-right {
+	align-self: flex-end;
+}
+
+.yellow-edit-text {
+	background-color: initial;
+}

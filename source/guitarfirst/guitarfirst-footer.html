@@ -1,0 +1,60 @@
+		<?php
+			$yellowThemeLocation = $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("CoreThemeLocation");
+		?>
+
+
+		<footer class="footer" role="contentinfo">
+			<?= $this->yellow->page->getPage("footer")->getContent() ?>
+			<div>
+				<ul class="list-unstyled center">
+					<li><a href="http://www.ibanez.com/"><img src="<?= $yellowThemeLocation ?>assets/img/guitarfirst-ibanez.png" alt="Ibanez"></a></li>
+					<li><a href="https://www.skullstrings.com/"><img src="<?= $yellowThemeLocation ?>assets/img/guitarfirst-skullstrings.png" alt="Skull Strings"></a></li>
+					<li><a href="http://www.maifrance.com/"><img src="<?= $yellowThemeLocation ?>assets/img/guitarfirst-mai.png" alt="MAI France"></a></li>
+				</ul>
+			</div>
+			<div>
+				<h2>Liens</h2>
+				<ul class="list-unstyled">
+					<li><a href="#">Retour en haut</a></li>
+					<li><a href="<?= $this->yellow->page->getBase(true) ?>/mentions-legales">Mentions légales</a></li>
+					<li><a href="<?= $this->yellow->page->getBase(true) ?>/sitemap">Plan du site</a></li>
+					<li><a href="<?= $this->yellow->page->getBase(true) ?>/contact">Contact</a></li>
+					<?php if($this->yellow->extension->isExisting("guitarfirst")): ?>
+					<?php
+						$locationFeed = $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("guitarfirstFeedLocation");
+						$locationFeed .= $this->yellow->toolbox->normaliseArguments("page:".$this->yellow->system->get("guitarfirstFeedFileXml"), false);
+					?>
+					<li><a href="<?= $locationFeed ?>">Flux RSS</a></li>
+					<?php endif ?>
+					<li><a href="<?= $this->yellow->page->getBase(true) ?>/edit/">Connexion</a></li>
+				</ul>
+			</div>
+			<div>
+				<h2>Contact</h2>
+				<ul class="list-inline">
+					<li><a href="https://www.facebook.com/profile.php?id=100056547021573" class="button is-primary animated-raised">Facebook</a></li>
+					<li><a href="http://www.youtube.com/channel/UCMZEQIjkTlVKhfrqQPopwng" class="button is-primary animated-raised">Youtube</a></li>
+					<li><a href="mailto:ericlitaudon@yahoo.fr" class="button is-primary animated-raised">Email</a></li>
+				</ul>
+				<p><a href="tel:+33688689055">+33 (0) 6 88 68 90 55</a></p>
+			</div>
+			<p class="footer-copyright">© <?= date("Y"); ?> Éric Litaudon | Design : <a href="https://yom.li/">Guillaume Litaudon</a></p>
+		</footer>
+
+		<script type="text/javascript">
+			window.addEventListener("scroll", parallax);
+
+			function parallax() {
+				var scrolled = window.pageYOffset;
+				var parallax = document.querySelectorAll(".content")[0];
+				var coords = -(scrolled * 0.4);
+				parallax.style.backgroundPositionY = coords + "px";
+			}
+		</script>
+
+		<div class="scroller">
+			<a href="#" class="scroller-link rounded-circle raised" role="button" aria-label="Retour en haut"></a>
+		</div>
+
+	</body>
+</html>

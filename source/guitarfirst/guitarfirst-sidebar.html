@@ -1,0 +1,47 @@
+		<?php if ($this->yellow->page->get("layout") == "blog-start"): ?>
+		<aside class="sidebar">
+			<h4>Archives</h4>
+			<ul class="list-unstyled">
+				<?php 
+					$months = $this->yellow->extension->get("blog")->getMonths(
+						$this->yellow->extension->get("blog")->getBlogPages(
+							$this->yellow->page->getLocation(false)
+						), "published");
+					uksort($months, "strnatcasecmp");
+					$months = array_reverse($months, true);
+					foreach ($months as $month => $count): 
+				?>
+					<li><a href="<?= $this->yellow->page->getUrl("blog").$this->yellow->toolbox->normaliseArguments("published:$month") ?>"><?= htmlspecialchars($this->yellow->language->getDateFormatted(strtotime($month), "F Y")) ?></a>&nbsp;(<?= $count ?>)</li>
+				<?php endforeach ?>
+			</ul>
+			<ul class="list-unstyled">
+				<?php if($this->yellow->extension->isExisting("guitarfirst")): ?>
+					<?php 
+						$locationFeed = $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("guitarfirstFeedLocation");
+						$locationFeed .= $this->yellow->toolbox->normaliseArguments("page:".$this->yellow->system->get("guitarfirstFeedFileXml"), false); 
+					?>
+					<li><a href="<?= $locationFeed ?>" class="button is-primary animated-raised">S’abonner</a></li>
+					<?php endif ?>
+				<li><a href="<?= $this->yellow->page->getBase(true) ?>/contact" class="button is-primary animated-raised">Contact</a></li>
+			</ul>
+		</aside>
+		<?php endif ?>
+		<?php 
+			$rawData = $this->yellow->page->getContent(false);
+			$location = rtrim($this->yellow->page->getUrl(), "/");
+            preg_match_all("/<h(\d) id=\"([^\"]+)\">(.*?)<\/h\d>/i", $rawData, $matches, PREG_SET_ORDER);
+			if ( $this->yellow->page->get("layout") == "default" && !empty($matches) ): ?>
+		<aside class="sidebar">
+
+		<h4>Sections</h4>
+			<ul class="list-unstyled">
+				<?php foreach ($matches as $match): ?>
+				<li><a href="<?= $location ?>#<?= $match[2] ?>"><?= $match[3] ?></a></li>
+				<?php endforeach ?>
+			</ul>
+			<ul class="list-unstyled">
+				<li><a href="<?= $this->yellow->page->getBase(true) ?>/contact" class="button is-primary animated-raised">Contact</a></li>
+			</ul>
+		</aside>
+		<?php endif ?>
+	

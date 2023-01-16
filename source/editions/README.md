@@ -1,4 +1,4 @@
-Editions 0.1.1
+Editions 0.8.21.1
 ==============
 
 Editions is a simple theme for [Datenstrom Yellow](https://datenstrom.se/yellow/) using [Croissant](https://github.com/yomli/croissant/). It is in use here: <https://editions.yom.li/>
@@ -13,7 +13,27 @@ All theme files are stored in your `system/themes` folder. All layout files are 
 
 Copy all files located in [manual](./manual/) to the root of your website. Yellow can't copy those files by itself.
 
+### New blog
+
+Just a tip: edit `content/shared/page-new-blog.md` to something like this:
+
+```
+---
+Title: Book title
+Subtitle:
+Collection:
+Published: @datetime
+Author: My Name
+Layout: blog
+Tag: Example
+Details: Pages->320|Format->14 x 17cm|ISBN (paper)->978-
+LinksRead: Lyber->/lyber/
+LinksPaperback: Lulu->
+LinksEbook: Lulu->
+---
+This is a new book
+```
+
 ## Designer
 
 Yomli. [Get help](https://datenstrom.se/yellow/help/).
-

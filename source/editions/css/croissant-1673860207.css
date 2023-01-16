@@ -1,7 +1,120 @@
-/*!
+:root {
+	color-scheme: light dark;
+
+	--font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--font-system: var(--font-sans);
+	--font-serif:  Georgia, Times, "Times New Roman", serif;
+	--font-monospace: "Source Code Pro", "Roboto Mono", Cousine, Menlo, Consolas, Courier, monospace;
+
+	--selection-color: rgba(0,113,173,.3);
+}
+
+/* Automatic/Manual light mode */
+:root, 
+:root .color-scheme-light {
+	--background-color: #FAFAFA;
+	--main-color: rgba(0,0,0,0.8);
+
+	/* Shades */
+	--background-color-far: #E1E1E1;
+	--background-color-close: #FFFFFF;
+
+	/* Color safe on white */
+	--blue-color: #0071AD;
+	--yellow-color: #FFC200; /* Do not use with text */
+	--red-color: #DE2A2A;
+	--orange-color: #C44F0C;
+	--green-color: #41814F;
+
+	/* Elements colors */
+	--button-color: #E1E1E1;
+	--mark-color: #FCF8E3;
+	--kbd-background-color: #F7F7F7;
+
+	/* Palette */
+	--primary-color: var(--blue-color);
+	--accent-color: var(--yellow-color); /* Do not use with text */
+	--danger-color: var(--red-color);
+	--alert-color: var(--orange-color);
+	--success-color: var(--green-color);
+}
+
+/* Automatic dark mode */
+/* Keep the rules in sync with the manual mode */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-color: #121212;
+		--main-color: rgba(255,255,255,0.8); /* For texts on dark-background */
+
+		/* Shades */
+		--background-color-far: #000000;
+		--background-color-close: #1E1E1E;
+
+		/* Color safe on black */
+		--blue-color: #36A2FF;
+		--yellow-color: #FFC200;
+		--red-color: #F03331;
+		--orange-color: #F27D1F;
+		--green-color: #4B955E;
+
+		/* Elements colors */
+		--button-color: #070B0E;
+		--mark-color: #FFF0A3;
+		--kbd-background-color: #040607;
+
+		/* Palette */
+		--primary-color: var(--blue-color);
+		--accent-color: var(--yellow-color); /* Do not use with text */
+		--danger-color: var(--red-color);
+		--alert-color: var(--orange-color);
+		--success-color: var(--green-color);
+
+		/* Image recolorization */
+		--image-filter: grayscale(25%);
+	}
+}
+
+/* Manual dark mode */
+/* Keep the rules in sync with the automatic mode */
+:root .color-scheme-dark {
+	--background-color: #121212;
+	--main-color: rgba(255,255,255,0.8);
+
+	/* Shades */
+	--background-color-far: #000000;
+	--background-color-close: #1E1E1E;
+
+	/* Color safe on black */
+	--blue-color: #36A2FF;
+	--yellow-color: #FFC200;
+	--red-color: #F03331;
+	--orange-color: #F27D1F;
+	--green-color: #4B955E;
+
+	/* Elements colors */
+	--button-color: #070B0E;
+	--mark-color: #FFF0A3;
+	--kbd-background-color: #040607;
+
+	/* Palette */
+	--primary-color: var(--blue-color);
+	--accent-color: var(--yellow-color);
+	--danger-color: var(--red-color);
+	--alert-color: var(--orange-color);
+	--success-color: var(--green-color);
+
+	/* Image recolorization */
+	--image-filter: grayscale(25%);
+}
+
+/* Images recolorization */
+/* See https://web.dev/prefers-color-scheme/#re-colorize-and-darken-photographic-images */
+img:not([src*=".svg"]) {
+	filter: var(--image-filter);
+}/*!
  * Rebase
  * Normalization of HTML elements
- * Forked from Bootstrap Reboot, licensed MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE) 
+ * Forked from Bootstrap Reboot, licensed MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
 /* Document
@@ -19,6 +132,12 @@
 	}
 }
 
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation: none;
+	}
+}
+
 html {
 	box-sizing: border-box; /* Inheriting box-sizing is better practice */
 	font-family: sans-serif;
@@ -29,7 +148,8 @@ html {
 
 ::selection {
 	background: #b3d4fc;
-	color: #212529;
+	background: var(--selection-color, #b3d4fc);
+	color: currentColor;
 	text-shadow: none; /* Remove text-shadow in selection highlight */
 }
 
@@ -39,15 +159,19 @@ html {
 body {
 	margin: 0;
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
 	color: #212529;
+	color: var(--main-color);
 	text-align: left;
 	background-color: #fff;
+	background-color: var(--background-color);
 	-webkit-text-size-adjust: 100%;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	scroll-behavior: smooth; /* Somewhat opiniated. */
+	overflow-x: hidden; /* Somewhat opiniated. */
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -84,14 +208,13 @@ abbr[title] {
 	cursor: inherit;
 }
 
-abbr[title]::after { 
-	content: ' ('attr(title)') '; 
+abbr[title]::after {
+	content: ' ('attr(title)') ';
 }
 
 @media screen and (min-width: 1025px) {
 	abbr[title],
 	abbr[data-original-title] {
-		text-decoration: underline;
 		-webkit-text-decoration: underline dotted;
 		text-decoration: underline dotted;
 		cursor: help;
@@ -100,7 +223,7 @@ abbr[title]::after {
 	}
 	abbr[title]::after {
 		content: '';
-	}	
+	}
 }
 
 
@@ -164,32 +287,22 @@ sup {
 
 /* Links
    ========================================================================== */
-
 a {
 	color: cornflowerblue;
+	color: var(--primary-color, cornflowerblue);
 	text-decoration: none;
 }
 
-a:not([class]):hover { /* Style global links without styling elements links */
-	text-decoration: underline;
-}
-
-a:not([href]):not([tabindex]),
-a:not([href]):not([class]) {
-	color: inherit;
-	text-decoration: none;
-}
-
-a:not([href]):not([tabindex]):hover, 
-a:not([href]):not([tabindex]):focus,
+a:not([href]):not([class]),
 a:not([href]):not([class]):hover,
 a:not([href]):not([class]):focus {
 	color: inherit;
 	text-decoration: none;
 }
 
-a:not([href]):not([tabindex]):focus {
-	outline: 0;
+a:not([class]):hover,
+a:not([class]):focus { /* Style global links without styling elements links */
+	text-decoration: underline;
 }
 
 /* Code
@@ -201,21 +314,37 @@ kbd,
 samp {
 	font-family: SFMono-Regular, Menlo, "DejaVu Sans Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 	font-size: 87.5%;
-	direction: ltr /* rtl:ignore */;
-	unicode-bidi: bidi-override;
 }
 
 pre {
+	color: currentColor;
 	display: block;
 	margin-top: 0;
 	margin-bottom: 1rem;
 	overflow: auto;
+	white-space: pre;
+}
+
+pre code { /* Account for some code outputs that place code tags in pre tags */
+	font-size: inherit;
+	color: inherit;
+	word-break: normal;
+	white-space: pre;
+}
+
+code {
+	overflow-wrap: break-word;
+	white-space: pre-wrap;
+}
+
+a > code { /* Streamline the style when inside anchors to avoid broken underline and more */
+	color: inherit;
 }
 
 /* Figures
    ========================================================================== */
 
-figure {
+figure { /* Apply a consistent margin strategy (matches our type styles) */
 	margin: 0 0 1rem;
 }
 
@@ -241,7 +370,7 @@ svg {
 /* Tables
    ========================================================================== */
 
-table {
+table { /* Prevent double borders */
 	border-collapse: collapse;
 	caption-side: bottom;
 }
@@ -254,25 +383,23 @@ caption {
 }
 
 th {
-	text-align: inherit;
-	text-align: -webkit-match-parent;
+	text-align: inherit; /* Matches default `<td>` alignment by inheriting `text-align` */
+	text-align: -webkit-match-parent; /* Fix alignment for Safari */
 }
 
 /* Forms
    ========================================================================== */
 
 label {
-	display: inline-block;
-	/*margin-bottom: 0.5rem;*/
+	display: inline-block; /* Allow labels to use `margin` for spacing */
 }
 
 button {
-	border-radius: 0;
+	border-radius: 0; /* Remove the default `border-radius` that macOS Chrome add */
 }
 
-button:focus {
-	outline: 1px dotted;
-	outline: 5px auto -webkit-focus-ring-color;
+button:focus:not(:focus-visible) { /* Remove the default `border-radius` that macOS Chrome add */
+	outline: 0;
 }
 
 input,
@@ -280,7 +407,7 @@ button,
 select,
 optgroup,
 textarea {
-	margin: 0;
+	margin: 0; /* Remove the margin in Firefox and Safari */
 	font-family: inherit;
 	font-size: inherit;
 	font-style: inherit;
@@ -288,16 +415,21 @@ textarea {
 }
 
 button,
-select {
+select { /* Remove the inheritance of text transform in Firefox */
 	text-transform: none;
 }
 
-select {
+select { /* Remove the inheritance of word-wrap in Safari */
 	word-wrap: normal;
 }
 
-[list]::-webkit-calendar-picker-indicator {
-	display: none;
+select:disabled { /* Undo the opacity change from Chrome */
+  opacity: 1;
+}
+
+/* Remove the dropdown arrow only from text type inputs built with datalists in Chrome */
+[list]:not([type=date]):not([type=datetime-local]):not([type=month]):not([type=week]):not([type=time])::-webkit-calendar-picker-indicator {
+  display: none !important;
 }
 
 :disabled {
@@ -311,7 +443,7 @@ button,
 [type="reset"],
 [type="submit"],
 [type="image"] {
-	-webkit-appearance: button;
+	-webkit-appearance: button; /* Correct the inability to style clickable types in iOS and Safari */
 }
 
 [role=button],
@@ -320,15 +452,15 @@ button:not(:disabled),
 [type="reset"]:not(:disabled),
 [type="submit"]:not(:disabled),
 [type="image"]:not(:disabled) {
-	cursor: pointer;
+	cursor: pointer; /* Add "hand" cursor to non-disabled button elements */
 }
 
-::-moz-focus-inner {
+::-moz-focus-inner { /* Remove inner border and padding from Firefox */
 	padding: 0;
 	border-style: none;
 }
 
-textarea {
+textarea { /* Textareas should really only resize vertically */
 	overflow: auto;
 	resize: vertical;
 }
@@ -364,7 +496,7 @@ progress {
 ::-webkit-datetime-edit-day-field,
 ::-webkit-datetime-edit-month-field,
 ::-webkit-datetime-edit-year-field {
-	padding: 0;
+	padding: 0; /* Fix height of inputs with a type of datetime-local, date, month, week, or time */
 }
 
 ::-webkit-inner-spin-button {
@@ -372,25 +504,22 @@ progress {
 }
 
 [type="search"] {
-	outline-offset: -2px;
-	-webkit-appearance: textfield;
+	outline-offset: -2px; /* Correct the outline style in Safari */
+	-webkit-appearance: textfield; /* This overrides the extra rounded corners on search inputs in iOS */
 }
 
 ::-webkit-search-decoration {
-	-webkit-appearance: none;
+	-webkit-appearance: none; /* Remove the inner padding in Chrome and Safari on macOS */
 }
 
 ::-webkit-color-swatch-wrapper {
-	padding: 0;
+	padding: 0; /* Remove padding around color pickers in webkit browsers */
 }
 
-::file-selector-button {
-	font: inherit;
-}
-
+::file-selector-button,
 ::-webkit-file-upload-button {
-	font: inherit;
-	-webkit-appearance: button;
+	font: inherit; /* Inherit font family and line height for file input buttons */
+	-webkit-appearance: button; /* Correct the inability to style clickable types in iOS and Safari */
 }
 
 /* Interactive
@@ -405,183 +534,18 @@ iframe {
 }
 
 summary {
-	display: list-item;
+	display: list-item; /* Add the correct display in all browsers */
 	cursor: pointer;
 }
 
-main {
-	display: block;
+progress {
+	vertical-align: baseline; /* Add the correct vertical alignment in Chrome, Firefox, and Opera */
 }
- 
+
 [hidden]
 .hidden {
   display: none !important;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	* {
-		animation: none;
-	}
-}:root {
-	color-scheme: light dark;
-	
-	--font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-system: var(--font-sans);
-	--font-serif:  Georgia, Times, "Times New Roman", serif;
-	--font-monospace: "Source Code Pro", "Roboto Mono", Cousine, Menlo, Consolas, Courier, monospace;
-
-	--icon-chevron-up: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"18 15 12 9 6 15\"></polyline></svg>');
-	--icon-scroller: var(--icon-chevron-up);
-}
-
-@media (prefers-color-scheme: light) {
-	:root {
-		/* AA compliant color palette */	
-		/* See https://identity.ucsf.edu/print-digital/digital-colors */
-		--background-color: #FAFAFA; /* Pure-white background is an issue for dyslexics */
-		--main-color: rgba(0,0,0,0.8); /* Body text on screen is dark grey rather than black and opacity remains legible with background changes */
-	
-		/* Shades */
-		/* See https://javisperez.github.io/tailwindcolorshades/ */
-		--background-color-far: #E1E1E1;
-		--background-color-close: #FFFFFF;
-	
-		/* Color safe on white */
-		--blue-color: #0071AD;
-		--yellow-color: #FFC200; /* Do not use with text */
-		--red-color: #DE2A2A;
-		--orange-color: #C44F0C;
-		--green-color: #41814F;
-			
-		/* Elements colors */
-		--button-color: #E1E1E1;
-		--mark-color: #FCF8E3;
-		--kbd-background-color: #F7F7F7;
-		--selection-color: rgba(222,42,42,0.5);
-	
-		/* Palette */
-		--primary-color: var(--blue-color);
-		--accent-color: var(--yellow-color); /* Do not use with text */
-		--danger-color: var(--red-color);
-		--alert-color: var(--orange-color);
-		--success-color: var(--green-color);
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background-color: #121212;
-		--main-color: rgba(255,255,255,0.8); /* For texts on dark-background */
-
-		/* Shades */
-		--background-color-far: #000000;
-		--background-color-close: #1E1E1E;
-	
-		/* Color safe on black */
-		--blue-color: #36A2FF;
-		--yellow-color: #FFC200;
-		--red-color: #F03331;
-		--orange-color: #F27D1F;
-		--green-color: #4B955E;
-
-		/* Elements colors */
-		--button-color: #070B0E;
-		--mark-color: #FFF0A3;
-		--kbd-background-color: #040607;
-		--selection-color: rgba(240,51,49,0.5);
-
-		/* Palette */
-		--primary-color: var(--blue-color);
-		--accent-color: var(--yellow-color); /* Do not use with text */
-		--danger-color: var(--red-color);
-		--alert-color: var(--orange-color);
-		--success-color: var(--green-color);
-
-		/* Image recolorization */
-		--image-filter: grayscale(25%);
-	}
-}
-
-/* Repeat for vanilla-js toggle theme */
-.color-scheme-light {
-	--background-color: #FAFAFA;
-	--main-color: rgba(0,0,0,0.8);
-
-	/* Shades */
-	--background-color-far: #E1E1E1;
-	--background-color-close: #FFFFFF;
-
-	/* Color safe on white */
-	--blue-color: #0071AD;
-	--yellow-color: #FFC200; /* Do not use with text */
-	--red-color: #DE2A2A;
-	--orange-color: #C44F0C;
-	--green-color: #41814F;
-		
-	/* Elements colors */
-	--button-color: #E1E1E1;
-	--mark-color: #FCF8E3;
-	--kbd-background-color: #F7F7F7;
-	--selection-color: rgba(222,42,42,0.5);
-
-	/* Palette */
-	--primary-color: var(--blue-color);
-	--accent-color: var(--yellow-color); /* Do not use with text */
-	--danger-color: var(--red-color);
-	--alert-color: var(--orange-color);
-	--success-color: var(--green-color);
-
-	/* Icon for color-scheme-toggle */
-	--icon-color-scheme: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"white\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"5\"></circle><line x1=\"12\" y1=\"1\" x2=\"12\" y2=\"3\"></line><line x1=\"12\" y1=\"21\" x2=\"12\" y2=\"23\"></line><line x1=\"4.22\" y1=\"4.22\" x2=\"5.64\" y2=\"5.64\"></line><line x1=\"18.36\" y1=\"18.36\" x2=\"19.78\" y2=\"19.78\"></line><line x1=\"1\" y1=\"12\" x2=\"3\" y2=\"12\"></line><line x1=\"21\" y1=\"12\" x2=\"23\" y2=\"12\"></line><line x1=\"4.22\" y1=\"19.78\" x2=\"5.64\" y2=\"18.36\"></line><line x1=\"18.36\" y1=\"5.64\" x2=\"19.78\" y2=\"4.22\"></line></svg>');
-}
-
-.color-scheme-dark {
-	--background-color: #121212;
-	--main-color: rgba(255,255,255,0.8);
-	
-	/* Shades */
-	--background-color-far: #000000;
-	--background-color-close: #1E1E1E;
-
-	/* Color safe on black */
-	--blue-color: #36A2FF;
-	--yellow-color: #FFC200;
-	--red-color: #F03331;
-	--orange-color: #F27D1F;
-	--green-color: #4B955E;
-	
-	/* Elements colors */
-	--button-color: #070B0E;
-	--mark-color: #FFF0A3;
-	--kbd-background-color: #040607;
-	--selection-color: rgba(240,51,49,0.5);
-	
-	/* Palette */
-	--primary-color: var(--blue-color);
-	--accent-color: var(--yellow-color);
-	--danger-color: var(--red-color);
-	--alert-color: var(--orange-color);
-	--success-color: var(--green-color);
-	
-	/* Image recolorization */
-	--image-filter: grayscale(25%);
-
-	/* Icon for color-scheme-toggle */
-	--icon-color-scheme: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"white\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"></path></svg>');
-}
-
-/* Images recolorization */
-/* See https://web.dev/prefers-color-scheme/#re-colorize-and-darken-photographic-images */
-img:not([src*=".svg"]) {
-	filter: var(--image-filter);
-}
-
-::selection {
-	background: var(--selection-color);
-	color: currentColor;
-	text-shadow: none; /* Remove text-shadow in selection highlight */
-}
-/* Utilities */
+}/* Utilities */
 
 .inline-block { 
 	display: inline-block; 
@@ -677,29 +641,7 @@ img:not([src*=".svg"]) {
 	left: 0;
 	z-index: 1;
 	content: "";
-}/*!
- * Base
- * Croissant
- */
-
-body {
-	overflow-x: hidden;
-	color: var(--main-color, rgba(0,0,0,0.8));
-	background-color: var(--background-color, #fafafa);
-}
-
-a {
-	color: var(--primary-color, #0071AD);
-	text-decoration: none;
-	/*position: relative;*/ /* .stretched-link doesn't work with position: relative */ 
-}
-
-/* Style global links without styling elements links */
-a:not([class]):hover,
-a:not([class]):focus {
-	text-decoration: underline;
-}
-/* Headings
+}/* Headings
    ========================================================================== */
 
 h1, h2, h3, h4, h5, h6,
@@ -732,16 +674,16 @@ hr {
 
 b,
 strong,
-.bold { 
-	font-weight: 600; 
+.bold {
+	font-weight: 600;
 }
 
-.regular { 
-	font-weight: normal; 
+.regular {
+	font-weight: normal;
 }
 
-.italic { 
-	font-style: italic; 
+.italic {
+	font-style: italic;
 }
 
 /* Emphasis
@@ -830,12 +772,12 @@ See https://github.com/twbs/bootstrap/issues/18178 */
 	width: 100vw;
 	height: auto;
 	margin-left: 50%;
-	transform: translateX(-50%);	
+	transform: translateX(-50%);
 }
 
 /* Figures
    ========================================================================== */
-   
+
 figure,
 .figure {
 	display: inline-block; /* Ensures the caption's text aligns with the image. */
@@ -858,26 +800,7 @@ figcaption,
 
 /* Inline code */
 code {
-	color: var(--green-color, #e83e8c);
-	word-break: break-word;
-}
-
-a > code {
-	color: inherit;
-}
-
-/* Block code */
-
-pre {
-	color: currentColor;
-	overflow: auto;
-	white-space: pre-wrap;
-}
-
-pre code {
-	font-size: inherit;
-	color: inherit;
-	word-break: normal;
+	color: var(--green-color, #41814F);
 }
 
 /* Keyboard */
@@ -895,203 +818,8 @@ kbd kbd {
 	background: none;
 	box-shadow: none;
 }
-/* Navbar
-   ========================================================================== */
 
-.navbar {
-	display: grid;
-	grid-template-columns: auto 1fr;
-	gap: 1rem;
-	padding: 0 1rem;
-}
-.navbar > * {
-	align-self: center;
-}
-.navbar-menu,
-.navbar-burger {
-	justify-self: end;
-}
-.navbar-brand {
-	font-size: 1.75rem;
-	line-height: 1.75rem;
-	margin: 0;
-	padding: 0.5rem 0;
-}
-.navbar-menu {
-	display: flex;
-	flex-direction: column;
-	position: absolute;
-	top: calc(-100vh - 100%);
-	right: 0;
-	margin: 0;
-	padding: 3rem;
-	width: 100%;
-	z-index: 100;
-	will-change: top;
-	transition: top ease-in-out 0.25s;
-	text-align: center;
-}
-.navbar-burger,
-.navbar-brand {
-	z-index: 200;
-}
-.navbar-menu a {
-	padding: 0.75rem;
-	width: 100%;
-	display: inline-block;
-}
-.navbar-burger:checked ~ .navbar-menu {
-	top: 0;
-}
-@media screen and (min-width: 44rem) {
-	.navbar-burger {
-		display: none !important;
-	}
-	.navbar-menu {		
-		flex-direction: row;
-		position: relative;
-		top: 0;
-		margin: 0;
-		padding: 0;
-		width: auto;
-	}
-}/* Navbar skin
-   ========================================================================== */
-
-.navbar {
-	background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0));
-	color: #fff;
-}
-.navbar a,
-.navbar a:hover {
-	color: currentColor;
-	text-decoration: none;
-	font-weight: 500;
-}
-.navbar-menu {
-	background: #121212;
-	border-bottom: 1px solid #010101;
-}
-.navbar-menu a:hover {
-	background: rgba(125,125,125,0.2);
-}
-.navbar-menu .active {
-	box-shadow: inset 2px 0 0 0; /* Inherits color, inset */
-	background: rgba(125,125,125,0.2);
-}
-@media screen and (min-width: 44rem) {
-	.navbar-menu {
-		background: transparent;
-		border: none;
-	}
-	.navbar-menu .active {
-		box-shadow: inset 0 2px 0 0; /* Inherits color, inset */
-		background: transparent;
-	}
-}input[type="checkbox"].navbar-burger {
-	position: absolute;
-	left: -200vw;
-	opacity: 0;
-}
-
-.navbar-burger {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	order: 9999;
-	/*margin: 1rem;*/
-	width: 1.5rem;
-	height: 1.5rem;
-	padding: 0;
-	/* outline: 0 !important; */
-	border: 0;
-	cursor: pointer;
-	-webkit-tap-highlight-color: transparent;
-	background-color: transparent;
-	color: inherit;
-}
-
-.navbar-burger-bun {
-	position: relative;
-	will-change: transform;
-	transition: background ease-in-out 0.30s;
-}
-
-.navbar-burger-bun,
-.navbar-burger-bun::before,
-.navbar-burger-bun::after {
-	width: 100%;
-	height: 0.187rem; /* height / 8 */
-	border-radius: 3px;
-	display: inline-block;	
-	background: currentColor;
-}
-
-.navbar-burger-bun::before,
-.navbar-burger-bun::after {
-	content:"";
-	position: absolute;
-	left:0;
-	will-change: top, transform;
-	transition: transform ease-in-out 0.25s,
- 				top ease-in-out 0.25s; /* using transition: all causes performance issues on firefox */
-}
-
-.navbar-burger-bun::before {
-	top: 0.375rem; /* height / 4 */
-}
-
-.navbar-burger-bun::after {
-	top: -0.375rem; /*  - height / 4 */
-}
-
-.navbar-burger:checked + .navbar-burger .navbar-burger-bun,
-.navbar-burger:focus .navbar-burger-bun {
-	background: transparent;
-}
-
-.navbar-burger:checked + .navbar-burger .navbar-burger-bun::before,
-.navbar-burger:checked + .navbar-burger .navbar-burger-bun::after,
-.navbar-burger:focus .navbar-burger-bun::before,
-.navbar-burger:focus .navbar-burger-bun::after {
-	top: 50%;
-}
-
-.navbar-burger:checked + .navbar-burger .navbar-burger-bun::before,
-.navbar-burger:focus .navbar-burger-bun::before {
-	transform: translate3d(0,-50%,0) rotate3d(0,0,1,45deg);
-}
-
-.navbar-burger:checked + .navbar-burger .navbar-burger-bun::after,
-.navbar-burger:focus .navbar-burger-bun::after {
-	transform: translate3d(0,-50%,0) rotate3d(0,0,1,-45deg);
-}
-
-/* Dots */
-/* .burger--dots */
-
-@media screen and (min-width: 44em) {
-	.desktop-only.burger--dots .navbar-burger-bun,
-	.desktop-only.burger--dots .navbar-burger-bun::before,
-	.desktop-only.burger--dots .navbar-burger-bun::after {
-		width: 0.187rem; /* height / 8 */
-		height: 0.187rem; /* height / 8 */
-		border-radius: 3px;
-		display: inline-block;	
-	}
-}
-
-/* Arrow left */
-
-/* Arrow right */
-
-/* Arrow top */
-
-/* Arrow bottom */
-
-/* Plus */
-
-/* Minus */.button,
+.button,
 button,
 [type="submit"],
 [type="reset"],
@@ -1244,8 +972,33 @@ button.is-success,
 .button--flat.is-success {
 	color: var(--success-color, #5C7E28);
 }
-/* Color Scheme Toggle
+/* Module : color-scheme-toggle
+
+	<noscript>
+		<style>
+			.color-scheme-toggle { display: none; }
+		</style>
+	</noscript>
+
+	<button type="button" class="color-scheme-toggle rounded-circle"></button>
+
+	Needs croissant.js > Spoon: color-mode
    ========================================================================== */
+
+:root,
+:root .color-scheme-light {
+	--icon-color-scheme: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"white\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"5\"></circle><line x1=\"12\" y1=\"1\" x2=\"12\" y2=\"3\"></line><line x1=\"12\" y1=\"21\" x2=\"12\" y2=\"23\"></line><line x1=\"4.22\" y1=\"4.22\" x2=\"5.64\" y2=\"5.64\"></line><line x1=\"18.36\" y1=\"18.36\" x2=\"19.78\" y2=\"19.78\"></line><line x1=\"1\" y1=\"12\" x2=\"3\" y2=\"12\"></line><line x1=\"21\" y1=\"12\" x2=\"23\" y2=\"12\"></line><line x1=\"4.22\" y1=\"19.78\" x2=\"5.64\" y2=\"18.36\"></line><line x1=\"18.36\" y1=\"5.64\" x2=\"19.78\" y2=\"4.22\"></line></svg>");
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--icon-color-scheme: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"white\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"></path></svg>");
+	}
+}
+
+:root .color-scheme-dark {
+	--icon-color-scheme: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"white\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"></path></svg>");
+}
 
 .color-scheme-toggle {
 	background: transparent var(--icon-color-scheme) no-repeat center center;
@@ -1259,55 +1012,7 @@ button.is-success,
 	/* filter: brightness(0.43) sepia(1) saturate(2.2) hue-rotate(79deg); /* Green */
 	outline: 0;
 }
-/* Module : Scroller
-
-   <div class="scroller">
-   	   <a href="#" class="scroller-link" role="button" aria-label="Back to top"></a>
-   </div>
-   
-   ========================================================================== */
-
-.layout { /* parent of scroller, ie body */
-	position: relative;
-}
-.scroller {
-	position: absolute;
-	top: 100vh;
-	right: 1rem;
-	bottom: 0;
-	width: 2.5rem;
-	z-index: 9999;
-	pointer-events: none;
-	/* Clip when there is too little content */
-	/* Clip is deprecated but clip-path doesn't works */
-	/*clip-path: inset(0 0 0 0); */
-	clip: rect(0, 2.5rem, auto, 0);
-}
-.scroller-link {
-	position: fixed; /* Fallback */
-	position: sticky;
-	top: calc(100vh - 3.5rem); /* positionning using height + .scroller right */
-	pointer-events: all;
-	cursor: pointer;
-	display: block;
-	background: var(--primary-color) var(--icon-scroller) no-repeat center center;
-	width: 2.5rem;
-	height: 2.5rem;
-}
-.scroller-link:hover,
-.scroller-link:focus {
-	-webkit-filter: saturate(95%) brightness(105%);
-	filter: saturate(95%) brightness(105%);
-}
-.scroller-link:active {
-	-webkit-filter: brightness(115%);
-	filter: brightness(115%);
-}
-@media print {
-	.scroller {
-		display: none !important;
-	}
-}input,
+input,
 textarea,
 select {
 	-moz-appearance: none !important;
@@ -1688,4 +1393,254 @@ select:not(:focus):invalid {
 .is-success:checked::after,
 .is-success.switch:checked::before  {
 	background-color: var(--success-color, #5C7E28);
+}input[type="checkbox"].navbar-burger {
+	position: absolute;
+	left: -200vw;
+	opacity: 0;
+}
+
+.navbar-burger {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	order: 9999;
+	/*margin: 1rem;*/
+	width: 1.5rem;
+	height: 1.5rem;
+	padding: 0;
+	/* outline: 0 !important; */
+	border: 0;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	background-color: transparent;
+	color: inherit;
+}
+
+.navbar-burger-bun {
+	position: relative;
+	will-change: transform;
+	transition: background ease-in-out 0.30s;
+}
+
+.navbar-burger-bun,
+.navbar-burger-bun::before,
+.navbar-burger-bun::after {
+	width: 100%;
+	height: 0.187rem; /* height / 8 */
+	border-radius: 3px;
+	display: inline-block;	
+	background: currentColor;
+}
+
+.navbar-burger-bun::before,
+.navbar-burger-bun::after {
+	content:"";
+	position: absolute;
+	left:0;
+	will-change: top, transform;
+	transition: transform ease-in-out 0.25s,
+ 				top ease-in-out 0.25s; /* using transition: all causes performance issues on firefox */
+}
+
+.navbar-burger-bun::before {
+	top: 0.375rem; /* height / 4 */
+}
+
+.navbar-burger-bun::after {
+	top: -0.375rem; /*  - height / 4 */
+}
+
+.navbar-burger:checked + .navbar-burger .navbar-burger-bun,
+.navbar-burger:focus .navbar-burger-bun {
+	background: transparent;
+}
+
+.navbar-burger:checked + .navbar-burger .navbar-burger-bun::before,
+.navbar-burger:checked + .navbar-burger .navbar-burger-bun::after,
+.navbar-burger:focus .navbar-burger-bun::before,
+.navbar-burger:focus .navbar-burger-bun::after {
+	top: 50%;
+}
+
+.navbar-burger:checked + .navbar-burger .navbar-burger-bun::before,
+.navbar-burger:focus .navbar-burger-bun::before {
+	transform: translate3d(0,-50%,0) rotate3d(0,0,1,45deg);
+}
+
+.navbar-burger:checked + .navbar-burger .navbar-burger-bun::after,
+.navbar-burger:focus .navbar-burger-bun::after {
+	transform: translate3d(0,-50%,0) rotate3d(0,0,1,-45deg);
+}
+
+/* Dots */
+/* .burger--dots */
+
+@media screen and (min-width: 44em) {
+	.desktop-only.burger--dots .navbar-burger-bun,
+	.desktop-only.burger--dots .navbar-burger-bun::before,
+	.desktop-only.burger--dots .navbar-burger-bun::after {
+		width: 0.187rem; /* height / 8 */
+		height: 0.187rem; /* height / 8 */
+		border-radius: 3px;
+		display: inline-block;	
+	}
+}
+
+/* Arrow left */
+
+/* Arrow right */
+
+/* Arrow top */
+
+/* Arrow bottom */
+
+/* Plus */
+
+/* Minus *//* Navbar
+   ========================================================================== */
+
+.navbar {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 1rem;
+	padding: 0 1rem;
+}
+.navbar > * {
+	align-self: center;
+}
+.navbar-menu,
+.navbar-burger {
+	justify-self: end;
+}
+.navbar-brand {
+	font-size: 1.75rem;
+	line-height: 1.75rem;
+	margin: 0;
+	padding: 0.5rem 0;
+}
+.navbar-menu {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: calc(-100vh - 100%);
+	right: 0;
+	margin: 0;
+	padding: 3rem;
+	width: 100%;
+	z-index: 100;
+	will-change: top;
+	transition: top ease-in-out 0.25s;
+	text-align: center;
+}
+.navbar-burger,
+.navbar-brand {
+	z-index: 200;
+}
+.navbar-menu a {
+	padding: 0.75rem;
+	width: 100%;
+	display: inline-block;
+}
+.navbar-burger:checked ~ .navbar-menu {
+	top: 0;
+}
+@media screen and (min-width: 44rem) {
+	.navbar-burger {
+		display: none !important;
+	}
+	.navbar-menu {		
+		flex-direction: row;
+		position: relative;
+		top: 0;
+		margin: 0;
+		padding: 0;
+		width: auto;
+	}
+}/* Navbar skin
+   ========================================================================== */
+
+.navbar {
+	background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0));
+	color: #fff;
+}
+.navbar a,
+.navbar a:hover {
+	color: currentColor;
+	text-decoration: none;
+	font-weight: 500;
+}
+.navbar-menu {
+	background: #121212;
+	border-bottom: 1px solid #010101;
+}
+.navbar-menu a:hover {
+	background: rgba(125,125,125,0.2);
+}
+.navbar-menu .active {
+	box-shadow: inset 2px 0 0 0; /* Inherits color, inset */
+	background: rgba(125,125,125,0.2);
+}
+@media screen and (min-width: 44rem) {
+	.navbar-menu {
+		background: transparent;
+		border: none;
+	}
+	.navbar-menu .active {
+		box-shadow: inset 0 2px 0 0; /* Inherits color, inset */
+		background: transparent;
+	}
+}/* Module : Scroller
+
+   <div class="scroller">
+   	   <a href="#" class="scroller-link" role="button" aria-label="Back to top"></a>
+   </div>
+
+   Needs croissant.js > Spoon: scroller-hide
+   ========================================================================== */
+
+:root {
+	--icon-scroller: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"18 15 12 9 6 15\"></polyline></svg>");
+}
+
+.layout { /* parent of scroller, ie body */
+	position: relative;
+}
+.scroller {
+	position: absolute;
+	top: 100vh;
+	right: 1rem;
+	bottom: 0;
+	width: 2.5rem;
+	z-index: 9999;
+	pointer-events: none;
+	/* Clip when there is too little content */
+	/* Clip is deprecated but clip-path doesn't works */
+	/*clip-path: inset(0 0 0 0); */
+	clip: rect(0, 2.5rem, auto, 0);
+}
+.scroller-link {
+	position: fixed; /* Fallback */
+	position: sticky;
+	top: calc(100vh - 3.5rem); /* positionning using height + .scroller right */
+	pointer-events: all;
+	cursor: pointer;
+
+	display: block;
+	background: var(--primary-color) var(--icon-scroller) no-repeat center center;
+	width: 2.5rem;
+	height: 2.5rem;
+}
+.scroller-link:hover,
+.scroller-link:focus {
+	-webkit-filter: saturate(95%) brightness(105%);
+	filter: saturate(95%) brightness(105%);
+}
+.scroller-link:active {
+	-webkit-filter: brightness(115%);
+	filter: brightness(115%);
+}
+@media print {
+	.scroller {
+		display: none !important;
+	}
 }

@@ -2,9 +2,9 @@
 // Basic extension, https://github.com/schulle4u/yellow-extension-basic
 
 class YellowEditions {
-    const VERSION = "0.8.15";
+    const VERSION = "0.8.21.1";
     public $yellow;         // access to API
-    
+
     // Handle initialisation
     public function onLoad($yellow) {
         $this->yellow = $yellow;
@@ -172,7 +172,7 @@ class YellowEditions {
         }
         return $output;
     }
-    
+
     //==================================
     // HANDLE UPDATE                  //
     //==================================

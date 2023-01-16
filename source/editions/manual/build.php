@@ -1,28 +1,15 @@
 <?php
 
 // Datenstrom Yellow is for people who make websites, https://datenstrom.se/yellow/
-// Copyright (c) 2013-2019 Datenstrom, https://datenstrom.se
+// Copyright (c) 2013-2023 Datenstrom, https://datenstrom.se
 // This file may be used and distributed under the terms of the public license.
-
-//chdir("site");
-//
-//version_compare(PHP_VERSION, "5.6", ">=") || die("Datenstrom Yellow requires PHP 5.6 or higher!");
-//extension_loaded("mbstring") || die("Datenstrom Yellow requires PHP mbstring extension!");
-//extension_loaded("curl") || die("Datenstrom Yellow requires PHP cURL extension!");
-//extension_loaded("zip") || die("Datenstrom Yellow requires PHP zip extension!");
-//require_once("system/extensions/core.php");
-//
-//$yellow = new YellowCore();
-//$yellow->load();
-//$statusCode = $yellow->command("build", "../");
-//exit($statusCode<400 ? 0 : 1);
 
 // Much faster than md5_file on large files
 // (~50% faster with 1GB file)
 function sameFile($file1, $file2) {
 	if (filetype($file1) !== filetype($file2)) return false;
 	if (filesize($file1) !== filesize($file2)) return false;
-	
+
     if (!$handle1 = fopen($file1, 'rb')) return false;
     if (!$handle2 = fopen($file2, 'rb')) {
         fclose($handle1);
@@ -74,17 +61,13 @@ function getDirectoryContent($path) {
 $execTime = -microtime(true);
 
 $root = __DIR__ . DIRECTORY_SEPARATOR;
-$yellowDir = $root . "admin";
+$yellowDir = $root . "site";
 $staticDir = $yellowDir . DIRECTORY_SEPARATOR . "public" . DIRECTORY_SEPARATOR;
-//$filesOnRoot = scandir($root);
 
-// YellowPage::set()
 $url = (!empty($_SERVER['HTTPS'])) ? 'https' : 'http';
 $url .= '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/';
 echo "<pre>Building static website $url</pre>";
 
-
-//require_once("system/extensions/core.php");
 chdir($yellowDir);
 require_once("system/extensions/core.php");
 
@@ -117,9 +100,9 @@ $staticDirContent = getDirectoryContent($staticDir);
 $lastBuildJSON = $root . "build.json";
 if (is_file($lastBuildJSON)) {
 	$lastBuild = json_decode(file_get_contents($lastBuildJSON), true); // Not safe PHP
-	
+
 	$diff = array_diff($lastBuild, $staticDirContent);
-	
+
 	clearstatcache();
 	foreach ($diff as $file) {
 		$path = $root . $file;
@@ -131,12 +114,12 @@ if (is_file($lastBuildJSON)) {
 			@unlink($path);
 		}
 	}
-	
+
 //	echo "Last build:";
 //	echo "<pre>";
 //	print_r($lastBuild);
 //	echo "</pre>";
-	
+
 	if (!empty($diff)) {
 		echo "Diff:";
 		echo "<pre>";
@@ -149,7 +132,6 @@ clearstatcache();
 foreach ($staticDirContent as $file) {
 	$path = dirname($root . $file);
 	if (!empty($path) && !is_dir($path)) @mkdir($path, 0777, true);
-	// @copy($staticDir . $file, $root . $file);
 	// No need to copy if same file
 	// if (md5_file($staticDir . $file) != md5_file($root . $file)) @copy($staticDir . $file, $root . $file); // 7s with 1GB files
 	if (!sameFile($staticDir . $file, $root . $file)) @copy($staticDir . $file, $root . $file); // 3 s with 1GB files
@@ -179,7 +161,3 @@ if ($ch = curl_init($url)) {
 }
 
 exit(0);
-
-// L'intérêt, c'est que si je veux clean le site, je renomme content et media, je refais un build, et j'ai plus qu'à supprimer media, robots.txt et 404.html.
-// Maintenant j'ai le choix : soit je balance un cron sur le build.php (génération du site toutes les heures, ce qui devrait me permettre à terme de faire des billets différés), soit je le fais manuellement (un simple bouton, même en AJAX). Et je peux mettre le build.php à la racine avec le htaccess qui va bien, histoire que si jamais le site n'est pas généré (index.html absent), ça génère le site.
-

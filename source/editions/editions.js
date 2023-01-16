@@ -1,5 +1,3 @@
-
-
 var ready = function() {
 	'use strict';
 /* See comments of https://dev.to/mrahmadawais/use-instead-of-document-queryselector-all-in-javascript-without-jquery-3ef1 */
@@ -55,36 +53,65 @@ const html = document.documentElement;
 	See https://gomakethings.com/adding-a-night-mode-to-your-site-with-vanilla-javascript/
 */
 ;(function (window, document, undefined) {
-	// Get value in localStorage and apply body class
+
+	// Apply scheme by adding a body class
+	// and make changes persistant
+	function applyScheme(scheme) {
+		switch (scheme) {
+			case 'light':
+				body.classList.remove('color-scheme-dark');
+				body.classList.add('color-scheme-light');
+				break;
+			case 'dark':
+				body.classList.remove('color-scheme-light');
+				body.classList.add('color-scheme-dark');
+				break;
+			default:
+				body.classList.remove('color-scheme-dark');
+				body.classList.remove('color-scheme-light');
+				break;
+		}
+		let systemScheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+		if (scheme === systemScheme) {
+			localStorage.removeItem('color-scheme');
+		} else {
+			localStorage.setItem('color-scheme', scheme);
+		}
+	}
+
+	// Get the theme to apply
+	function getCurrentScheme() {
+		let systemScheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+		let chosenScheme = localStorage.getItem('color-scheme') ? localStorage.getItem('color-scheme') : systemScheme;
+		if (systemScheme === chosenScheme) localStorage.removeItem('color-scheme');
+		return chosenScheme;
+	}
+
+	// Apply scheme at load
 	if (!('localStorage' in window)) return;
-	var darkMode = localStorage.getItem('color-scheme-dark');
-	
-	body.className += (!darkMode) ? ' color-scheme-light' : ' color-scheme-dark';
-	
-	// Get button
-	var colorModeButton = $('.color-scheme-toggle');
-	if (!colorModeButton) return;
-		
-	// When clicked, toggle color mode
-	[].forEach.call(colorModeButton, function(button) {
+	applyScheme(getCurrentScheme());
+
+	// Toggle scheme by pressing button
+	var colorButton = $('.color-scheme-toggle');
+	if (!colorButton) return;
+	[].forEach.call(colorButton, function(button) {
 		button.addEventListener('click', function(event) {
 			//event.preventDefault();
-			body.classList.toggle('color-scheme-dark');
-			body.classList.toggle('color-scheme-light');
+			// Toggle scheme
+			let newScheme = (getCurrentScheme() === 'dark') ? 'light' : 'dark';
+			applyScheme(newScheme);
 
 			// Clear focus
 			document.activeElement.blur();
-			
-			// Make night mode persistant
-			if(body.classList.contains('color-scheme-dark')) {
-				localStorage.setItem('color-scheme-dark', true);
-				return;
-			}
-			localStorage.removeItem('color-scheme-dark');
-		}, false);
 
+		}, false);
 	});
+
+	// Apply scheme on system change
+	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => e.matches && applyScheme('dark'));
+	window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => e.matches && applyScheme('light'));
 		
 })(window, document);
+
 }
 window.addEventListener("load", ready, false);

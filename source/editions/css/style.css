@@ -1,7 +1,8 @@
 :root,
-.color-scheme-light,
-.color-scheme-dark {
+:root .color-scheme-light,
+:root .color-scheme-dark {
 	--primary-color: var(--red-color);
+	--selection-color: rgba(222,42,42,.3);
 }
 
 /*	=============================================
@@ -14,7 +15,7 @@
 .navbar {
 	background: transparent;
 }
-.navbar-burger-bun, 
+.navbar-burger-bun,
 .navbar-burger-bun::before,
 .navbar-burger-bun::after {
 	color: var(--main-color);
@@ -219,7 +220,7 @@
 		max-width: 5cm !important;
 		margin: 2rem auto;
 	}
-	
+
 }
 
 @page {

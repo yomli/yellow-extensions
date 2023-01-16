@@ -11,7 +11,7 @@ All theme files are stored in your `system/themes` folder. All layout files are 
 
 [Download extension](https://github.com/yomli/yellow-extensions/raw/main/zip/editions.zip) and copy zip file into your `system/extensions` folder. Right click if you use Safari.
 
-Copy all files located in [manual](./manual/) to the root of your website. Yellow can't copy those files by itself.
+Copy all files located in [manual](https://github.com/yomli/yellow-extensions/raw/main/zip/editions-manual.zip) to the root of your website. Yellow can't copy those files by itself.
 
 ### New blog
 

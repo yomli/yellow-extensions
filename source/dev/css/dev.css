@@ -1,0 +1,2020 @@
+:root {
+	color-scheme: light dark;
+
+	--font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--font-system: var(--font-sans);
+	--font-serif:  Georgia, Times, "Times New Roman", serif;
+	--font-monospace: "Source Code Pro", "Roboto Mono", Cousine, Menlo, Consolas, Courier, monospace;
+
+	--selection-color: rgba(0,113,173,.3);
+}
+
+/* Automatic/Manual light mode */
+:root, 
+:root .color-scheme-light {
+	--background-color: #FAFAFA;
+	--main-color: rgba(0,0,0,0.8);
+
+	/* Shades */
+	--background-color-far: #E1E1E1;
+	--background-color-close: #FFFFFF;
+
+	/* Color safe on white */
+	--blue-color: #0071AD;
+	--yellow-color: #FFC200; /* Do not use with text */
+	--red-color: #DE2A2A;
+	--orange-color: #C44F0C;
+	--green-color: #41814F;
+
+	/* Elements colors */
+	--button-color: #E1E1E1;
+	--mark-color: #FCF8E3;
+	--kbd-background-color: #F7F7F7;
+
+	/* Palette */
+	--primary-color: var(--blue-color);
+	--accent-color: var(--yellow-color); /* Do not use with text */
+	--danger-color: var(--red-color);
+	--alert-color: var(--orange-color);
+	--success-color: var(--green-color);
+}
+
+/* Automatic dark mode */
+/* Keep the rules in sync with the manual mode */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-color: #121212;
+		--main-color: rgba(255,255,255,0.8); /* For texts on dark-background */
+
+		/* Shades */
+		--background-color-far: #000000;
+		--background-color-close: #1E1E1E;
+
+		/* Color safe on black */
+		--blue-color: #36A2FF;
+		--yellow-color: #FFC200;
+		--red-color: #F03331;
+		--orange-color: #F27D1F;
+		--green-color: #4B955E;
+
+		/* Elements colors */
+		--button-color: #070B0E;
+		--mark-color: #FFF0A3;
+		--kbd-background-color: #040607;
+
+		/* Palette */
+		--primary-color: var(--blue-color);
+		--accent-color: var(--yellow-color); /* Do not use with text */
+		--danger-color: var(--red-color);
+		--alert-color: var(--orange-color);
+		--success-color: var(--green-color);
+
+		/* Image recolorization */
+		--image-filter: grayscale(25%);
+	}
+}
+
+/* Manual dark mode */
+/* Keep the rules in sync with the automatic mode */
+:root .color-scheme-dark {
+	--background-color: #121212;
+	--main-color: rgba(255,255,255,0.8);
+
+	/* Shades */
+	--background-color-far: #000000;
+	--background-color-close: #1E1E1E;
+
+	/* Color safe on black */
+	--blue-color: #36A2FF;
+	--yellow-color: #FFC200;
+	--red-color: #F03331;
+	--orange-color: #F27D1F;
+	--green-color: #4B955E;
+
+	/* Elements colors */
+	--button-color: #070B0E;
+	--mark-color: #FFF0A3;
+	--kbd-background-color: #040607;
+
+	/* Palette */
+	--primary-color: var(--blue-color);
+	--accent-color: var(--yellow-color);
+	--danger-color: var(--red-color);
+	--alert-color: var(--orange-color);
+	--success-color: var(--green-color);
+
+	/* Image recolorization */
+	--image-filter: grayscale(25%);
+}
+
+/* Images recolorization */
+/* See https://web.dev/prefers-color-scheme/#re-colorize-and-darken-photographic-images */
+img:not([src*=".svg"]) {
+	filter: var(--image-filter);
+}/*!
+ * Rebase
+ * Normalization of HTML elements
+ * Forked from Bootstrap Reboot, licensed MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+/* Document
+   ========================================================================== */
+
+*,
+*::after,
+*::before {
+	box-sizing: inherit; /* Inheriting box-sizing is better practice */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	:root {
+		scroll-behavior: smooth;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation: none;
+	}
+}
+
+html {
+	box-sizing: border-box; /* Inheriting box-sizing is better practice */
+	font-family: sans-serif;
+	line-height: 1.15;
+	-webkit-text-size-adjust: 100%;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+::selection {
+	background: #b3d4fc;
+	background: var(--selection-color, #b3d4fc);
+	color: currentColor;
+	text-shadow: none; /* Remove text-shadow in selection highlight */
+}
+
+/* Body
+   ========================================================================== */
+
+body {
+	margin: 0;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #212529;
+	color: var(--main-color);
+	text-align: left;
+	background-color: #fff;
+	background-color: var(--background-color);
+	-webkit-text-size-adjust: 100%;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	scroll-behavior: smooth; /* Somewhat opiniated. */
+	overflow-x: hidden; /* Somewhat opiniated. */
+}
+
+[tabindex="-1"]:focus:not(:focus-visible) {
+	outline: 0 !important;
+}
+
+/* Body
+   ========================================================================== */
+
+hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+hr:not([size]) {
+	height: 1px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 0;
+	margin-bottom: 0.5rem;
+}
+
+p {
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+/* Mobile-first & print-friendly abbreviations */
+abbr[title] {
+	text-decoration: none;
+	border-bottom: 0;
+	cursor: inherit;
+}
+
+abbr[title]::after {
+	content: ' ('attr(title)') ';
+}
+
+@media screen and (min-width: 1025px) {
+	abbr[title],
+	abbr[data-original-title] {
+		-webkit-text-decoration: underline dotted;
+		text-decoration: underline dotted;
+		cursor: help;
+		-webkit-text-decoration-skip-ink: none;
+		text-decoration-skip-ink: none;
+	}
+	abbr[title]::after {
+		content: '';
+	}
+}
+
+
+address {
+	margin-bottom: 1rem;
+	font-style: normal;
+	line-height: inherit;
+}
+
+ol,
+ul,
+dl {
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+ol ol,
+ul ul,
+ol ul,
+ul ol {
+	margin-bottom: 0;
+}
+
+dt {
+	font-weight: 600;
+}
+
+dd {
+	margin-bottom: 0.5rem;
+	margin-left: 0;
+}
+
+blockquote {
+	margin: 0 0 1rem;
+}
+
+b,
+strong {
+	font-weight: bolder;
+}
+
+small {
+	font-size: 80%;
+}
+
+sub,
+sup {
+	position: relative;
+	font-size: 75%;
+	line-height: 0;
+	vertical-align: baseline;
+}
+
+sub {
+	bottom: -0.25em;
+}
+
+sup {
+	top: -0.5em;
+}
+
+/* Links
+   ========================================================================== */
+a {
+	color: cornflowerblue;
+	color: var(--primary-color, cornflowerblue);
+	text-decoration: none;
+}
+
+a:not([href]):not([class]),
+a:not([href]):not([class]):hover,
+a:not([href]):not([class]):focus {
+	color: inherit;
+	text-decoration: none;
+}
+
+a:not([class]):hover,
+a:not([class]):focus { /* Style global links without styling elements links */
+	text-decoration: underline;
+}
+
+/* Code
+   ========================================================================== */
+
+pre,
+code,
+kbd,
+samp {
+	font-family: SFMono-Regular, Menlo, "DejaVu Sans Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	font-size: 87.5%;
+}
+
+pre {
+	color: currentColor;
+	display: block;
+	margin-top: 0;
+	margin-bottom: 1rem;
+	overflow: auto;
+	white-space: pre;
+}
+
+pre code { /* Account for some code outputs that place code tags in pre tags */
+	font-size: inherit;
+	color: inherit;
+	word-break: normal;
+	white-space: pre;
+}
+
+code {
+	overflow-wrap: break-word;
+	white-space: pre-wrap;
+}
+
+a > code { /* Streamline the style when inside anchors to avoid broken underline and more */
+	color: inherit;
+}
+
+/* Figures
+   ========================================================================== */
+
+figure { /* Apply a consistent margin strategy (matches our type styles) */
+	margin: 0 0 1rem;
+}
+
+/* Images and media
+   ========================================================================== */
+
+.img,
+img,
+svg,
+video,
+audio,
+canvas,
+iframe {
+    vertical-align: middle;
+}
+
+
+svg {
+	overflow: hidden;
+	fill: currentColor; /* Somewhat opinionated but you'll pay me a beer in return soon enough */
+}
+
+/* Tables
+   ========================================================================== */
+
+table { /* Prevent double borders */
+	border-collapse: collapse;
+	caption-side: bottom;
+}
+
+caption {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	color: #6c757d;
+	text-align: left;
+}
+
+th {
+	text-align: inherit; /* Matches default `<td>` alignment by inheriting `text-align` */
+	text-align: -webkit-match-parent; /* Fix alignment for Safari */
+}
+
+/* Forms
+   ========================================================================== */
+
+label {
+	display: inline-block; /* Allow labels to use `margin` for spacing */
+}
+
+button {
+	border-radius: 0; /* Remove the default `border-radius` that macOS Chrome add */
+}
+
+button:focus:not(:focus-visible) { /* Remove the default `border-radius` that macOS Chrome add */
+	outline: 0;
+}
+
+input,
+button,
+select,
+optgroup,
+textarea {
+	margin: 0; /* Remove the margin in Firefox and Safari */
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	line-height: inherit;
+}
+
+button,
+select { /* Remove the inheritance of text transform in Firefox */
+	text-transform: none;
+}
+
+select { /* Remove the inheritance of word-wrap in Safari */
+	word-wrap: normal;
+}
+
+select:disabled { /* Undo the opacity change from Chrome */
+  opacity: 1;
+}
+
+/* Remove the dropdown arrow only from text type inputs built with datalists in Chrome */
+[list]:not([type=date]):not([type=datetime-local]):not([type=month]):not([type=week]):not([type=time])::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+
+:disabled {
+	cursor: not-allowed;
+	pointer-events: none;
+	box-shadow: none !important;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"],
+[type="image"] {
+	-webkit-appearance: button; /* Correct the inability to style clickable types in iOS and Safari */
+}
+
+[role=button],
+button:not(:disabled),
+[type="button"]:not(:disabled),
+[type="reset"]:not(:disabled),
+[type="submit"]:not(:disabled),
+[type="image"]:not(:disabled) {
+	cursor: pointer; /* Add "hand" cursor to non-disabled button elements */
+}
+
+::-moz-focus-inner { /* Remove inner border and padding from Firefox */
+	padding: 0;
+	border-style: none;
+}
+
+textarea { /* Textareas should really only resize vertically */
+	overflow: auto;
+	resize: vertical;
+}
+
+fieldset {
+	min-width: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+legend {
+	float: left; /* the legend will behave like a block element */
+	width: 100%;
+	padding: 0;
+	margin-bottom: 0.5rem;
+	font-size: 1.5rem;
+	line-height: inherit;
+}
+
+legend + * {
+	clear: left; /* Fix wrapping bug */
+}
+
+progress {
+	vertical-align: baseline;
+}
+
+::-webkit-datetime-edit-fields-wrapper,
+::-webkit-datetime-edit-text,
+::-webkit-datetime-edit-minute,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-year-field {
+	padding: 0; /* Fix height of inputs with a type of datetime-local, date, month, week, or time */
+}
+
+::-webkit-inner-spin-button {
+	height: auto;
+}
+
+[type="search"] {
+	outline-offset: -2px; /* Correct the outline style in Safari */
+	-webkit-appearance: textfield; /* This overrides the extra rounded corners on search inputs in iOS */
+}
+
+::-webkit-search-decoration {
+	-webkit-appearance: none; /* Remove the inner padding in Chrome and Safari on macOS */
+}
+
+::-webkit-color-swatch-wrapper {
+	padding: 0; /* Remove padding around color pickers in webkit browsers */
+}
+
+::file-selector-button,
+::-webkit-file-upload-button {
+	font: inherit; /* Inherit font family and line height for file input buttons */
+	-webkit-appearance: button; /* Correct the inability to style clickable types in iOS and Safari */
+}
+
+/* Interactive
+   ========================================================================== */
+
+output {
+	display: inline-block;
+}
+
+iframe {
+	border: 0;
+}
+
+summary {
+	display: list-item; /* Add the correct display in all browsers */
+	cursor: pointer;
+}
+
+progress {
+	vertical-align: baseline; /* Add the correct vertical alignment in Chrome, Firefox, and Opera */
+}
+
+[hidden]
+.hidden {
+  display: none !important;
+}/* Utilities */
+
+.inline-block { 
+	display: inline-block; 
+}
+
+.inline-block:not(:last-child) { /* For lists, needs to be tested */
+	margin-right: 0.5rem;
+	color: lightgray;
+}
+
+.clearfix::after {
+	clear: both;
+	content: ' ';
+	display: table;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.square {
+	object-fit: cover;
+	height: var(--width, 512px);
+	width: var(--width, 512px);
+}
+
+.rounded {
+	border-radius: 0.25rem !important;
+}
+
+.rounded-circle {
+	border-radius: 100% !important;
+}
+
+.rounded-pill {
+	border-radius: 999em !important;
+}
+
+.avatar { /* Basically, alias to .rounded-circle .thumbnail .square */
+	border-radius: 100%;
+	object-fit: cover;
+	height: var(--width, 512px);
+	width: var(--width, 512px);
+	padding: 0.25rem;
+	background-color: var(--background-color-close, #FFFFFF);
+	/*border: 1px solid var(--background-color-far, #E1E1E1);*/
+}
+
+.card,
+.raised,
+.animated-raised {
+	box-shadow: 0 0 2px rgba(0,0,0,0.1), 0 2px 2px rgba(0,0,0,0.2);
+}
+
+.raised:hover,
+.raised:focus,
+.animated-raised:hover,
+.animated-raised:focus {
+	box-shadow: 0 4px 20px rgba(0,0,0,0.1), 0 3px 2px rgba(0,0,0,0.25);
+}
+
+.raised:active
+.animated-raised:active {
+	box-shadow: none;
+}
+
+.card {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+.animated-raised:hover,
+.animated-raised:focus {
+	position: relative;
+	top: -1px;
+}
+
+.animated-raised:active {
+	position: relative;
+	top: 0;
+}
+
+/* Stretched link, must be in relative parent */
+.stretched-link::after {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+	content: "";
+}/* Headings
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	margin-bottom: 0.5rem;
+	font-weight: 400; /* Size matters. */
+	line-height: 1.2;
+}
+
+h1, .h1 { font-size: 2.5rem; }
+h2, .h2 { font-size: 2rem; }
+h3, .h3 { font-size: 1.75rem; }
+h4, .h4 { font-size: 1.5rem; }
+h5, .h5 { font-size: 1.25rem; }
+h6, .h6 { font-size: 1rem; font-weight: 500; }
+
+
+/* Horizontal rules
+   ========================================================================== */
+
+hr {
+	margin: 1rem auto;
+	border: 0;
+	border-top: 1px solid currentColor;
+	opacity: 0.5;
+}
+
+/* Font styles
+   ========================================================================== */
+
+b,
+strong,
+.bold {
+	font-weight: 600;
+}
+
+.regular {
+	font-weight: normal;
+}
+
+.italic {
+	font-style: italic;
+}
+
+/* Emphasis
+   ========================================================================== */
+
+small,
+.small {
+	font-size: 80%;
+	font-weight: 400;
+}
+
+mark,
+.mark {
+	padding: 0.2em;
+	background-color: var(--mark-color, #FCF8E3);
+}
+
+
+/* Lists
+   ========================================================================== */
+
+.list-unstyled,
+.list-inline {
+	padding-left: 0;
+	list-style: none;
+}
+
+.list-inline li {
+	display: inline-block;
+}
+
+.list-inline li:not(:last-child) {
+	margin-right: 0.5rem;
+}
+
+/* Blockquotes & quotes
+   ========================================================================== */
+
+blockquote,
+.blockquote {
+    font-size: 1.25rem;
+}
+
+blockquote footer,
+.blockquote-footer {
+	display: block;
+	font-size: 80%;
+	color: currentColor;
+	opacity: 0.6;
+}
+
+blockquote footer::before,
+.blockquote-footer::before {
+	content: '—\a0';
+}
+
+/* Quotes */
+q::before { content: open-quote; }
+q::after { content: close-quote; }
+
+q, q:lang(en) { quotes: '“' '”' '‘' '’'; }
+q:lang(fr) { quotes: '«\a0' '\a0»' '“\a0' '\a0”'; } /* Always a non-breakable space before a double punctuation in French. */
+/* Images
+   ========================================================================== */
+
+/* Responsive image as opt-in
+If applied to all images, it breaks third-party widgets.
+See https://github.com/twbs/bootstrap/issues/18178 */
+.fit {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Thumbnail image */
+.thumbnail {
+	max-width: 100%;
+	height: auto;
+	padding: 0.25rem;
+	background-color: var(--background-color-close, #FFFFFF);
+	border: 1px solid var(--background-color-far, #E1E1E1);
+	border-radius: 0.25rem;
+}
+
+/* See https://archive.hankchizljaw.com/wrote/creating-a-full-bleed-css-utility/ */
+.full-bleed {
+	width: 100vw;
+	height: auto;
+	margin-left: 50%;
+	transform: translateX(-50%);
+}
+
+/* Figures
+   ========================================================================== */
+
+figure,
+.figure {
+	display: inline-block; /* Ensures the caption's text aligns with the image. */
+}
+
+figure img,
+.figure-img {
+	margin-bottom: 0.5rem;
+	line-height: 1;
+}
+
+figcaption,
+.figure-caption {
+	font-size: 90%;
+	color: currentColor;
+	opacity: 0.6;
+}
+/* Code
+   ========================================================================== */
+
+/* Inline code */
+code {
+	color: var(--green-color, #41814F);
+}
+
+/* Keyboard */
+kbd {
+	padding: 0.2rem 0.4rem;
+	color: #444;
+	background-color: var(--kbd-background-color, #F7F7F7);
+	box-shadow: 0px 1px 2px rgba(0,0,0,0.2), 0 0 0 2px var(--background-color-close, #FFFFFF) inset;
+	border-radius: 0.2rem;
+}
+
+kbd kbd {
+	padding: 0;
+	font-size: 100%;
+	background: none;
+	box-shadow: none;
+}
+
+.button,
+button,
+[type="submit"],
+[type="reset"],
+[type="button"],
+[type="image"] {
+	cursor: pointer;
+	display: inline-block;
+	height: 2rem;
+	line-height: 2rem;
+	text-align: center;
+	padding: 0 1rem;
+	margin: 0.5rem 0;
+	white-space: nowrap;
+}
+
+.button.rounded-circle,
+button.rounded-circle,
+input[type="submit"].rounded-circle,
+input[type="reset"].rounded-circle,
+input[type="button"].rounded-circle,
+input[type="image"].rounded-circle {
+	width: 2rem;
+	padding: 0;
+}.button,
+button,
+[type="submit"],
+[type="reset"],
+[type="button"],
+[type="image"] {
+	background: var(--button-color, #E1E1E1);
+	color: currentColor;
+	border: none;
+	border-radius: 3px;
+	/*text-transform: uppercase;*/
+}
+
+.button:hover,
+button:hover,
+[type="submit"]:hover,
+[type="reset"]:hover,
+[type="button"]:hover,
+[type="image"]:hover,
+.button:focus,
+button:focus,
+[type="submit"]:focus,
+[type="reset"]:focus,
+[type="button"]:focus,
+[type="image"]:focus {
+	-webkit-filter: saturate(95%) brightness(105%);
+	filter: saturate(95%) brightness(105%);
+	color: currentColor;
+	text-decoration: none;
+}
+
+.button:active,
+button:active,
+[type="submit"]:active,
+[type="reset"]:active,
+[type="button"]:active,
+[type="image"]:active {
+	-webkit-filter: brightness(115%);
+	filter: brightness(115%);
+	box-shadow: none !important;
+}
+
+.button.disabled,
+button:disabled,
+[type="submit"]:disabled,
+[type="reset"]:disabled,
+[type="button"]:disabled,
+[type="image"]:disabled {
+	opacity: 0.6;
+}
+
+.button.is-primary,
+button.is-primary,
+[type="submit"].is-primary,
+[type="reset"].is-primary,
+[type="button"].is-primary,
+[type="image"].is-primary  {
+	background: var(--primary-color, #0071AD);
+	color: #FFFFFF;
+}
+
+.button.is-accent,
+button.is-accent,
+[type="submit"].is-accent,
+[type="reset"].is-accent,
+[type="button"].is-accent,
+[type="image"].is-accent  {
+	background: var(--accent-color, #FFC200);
+	color: #FFFFFF;
+}
+
+.button.is-danger,
+button.is-danger,
+[type="submit"].is-danger,
+[type="reset"].is-danger,
+[type="button"].is-danger,
+[type="image"].is-danger {
+	background: var(--danger-color, #DE2A2A);
+	color: #FFFFFF;
+}
+
+.button.is-alert,
+button.is-alert,
+[type="submit"].is-alert,
+[type="reset"].is-alert,
+[type="button"].is-alert,
+[type="image"].is-alert {
+	background: var(--alert-color, #C44F0C);
+	color: #FFFFFF;
+}
+
+.button.is-success,
+button.is-success,
+[type="submit"].is-success,
+[type="reset"].is-success,
+[type="button"].is-success,
+[type="image"].is-success {
+	background: var(--success-color, #5C7E28);
+	color: #FFFFFF;
+}
+
+.button--flat {
+	background: transparent !important;
+}
+
+.button--flat:hover,
+.button--flat:focus {
+	background: var(--background-color-far, lightgrey) !important;
+}
+
+.button--flat.is-primary {
+	color: var(--primary-color, #0071AD);
+}
+
+.button--flat.is-accent {
+	color: var(--accent-color, #FFC200);
+}
+
+.button--flat.is-danger {
+	color: var(--danger-color, #DE2A2A);
+}
+
+.button--flat.is-alert {
+	color: var(--alert-color, #C44F0C);
+}
+
+.button--flat.is-success {
+	color: var(--success-color, #5C7E28);
+}
+/* Module : color-scheme-toggle
+
+	<noscript>
+		<style>
+			.color-scheme-toggle { display: none; }
+		</style>
+	</noscript>
+
+	<button type="button" class="color-scheme-toggle rounded-circle"></button>
+
+	Needs croissant.js > Spoon: color-mode
+   ========================================================================== */
+
+:root,
+:root .color-scheme-light {
+	--icon-color-scheme: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"white\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"5\"></circle><line x1=\"12\" y1=\"1\" x2=\"12\" y2=\"3\"></line><line x1=\"12\" y1=\"21\" x2=\"12\" y2=\"23\"></line><line x1=\"4.22\" y1=\"4.22\" x2=\"5.64\" y2=\"5.64\"></line><line x1=\"18.36\" y1=\"18.36\" x2=\"19.78\" y2=\"19.78\"></line><line x1=\"1\" y1=\"12\" x2=\"3\" y2=\"12\"></line><line x1=\"21\" y1=\"12\" x2=\"23\" y2=\"12\"></line><line x1=\"4.22\" y1=\"19.78\" x2=\"5.64\" y2=\"18.36\"></line><line x1=\"18.36\" y1=\"5.64\" x2=\"19.78\" y2=\"4.22\"></line></svg>");
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--icon-color-scheme: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"white\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"></path></svg>");
+	}
+}
+
+:root .color-scheme-dark {
+	--icon-color-scheme: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"white\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"></path></svg>");
+}
+
+.color-scheme-toggle {
+	background: transparent var(--icon-color-scheme) no-repeat center center;
+}
+
+.color-scheme-toggle:hover,
+.color-scheme-toggle:focus {
+	/* hsl value from starting point of sepia : hsl(54, 15%, 57%) */
+	/* See https://css-tricks.com/solved-with-css-colorizing-svg-backgrounds/ */
+	filter: brightness(0.75) sepia(1) saturate(5); /* Yellow */
+	/* filter: brightness(0.43) sepia(1) saturate(2.2) hue-rotate(79deg); /* Green */
+	outline: 0;
+}
+input,
+textarea,
+select {
+	-moz-appearance: none !important;
+	-webkit-appearance: none !important;
+	appearance: none !important;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	display: block;
+	width: 100%;
+	height: 2rem;
+	line-height: 2rem;
+	padding: 0 1rem;
+	margin: 0.5rem 0;
+}
+
+textarea {
+	min-height: 4rem;
+}
+
+[type="submit"],
+[type="reset"],
+[type="button"],
+[type="image"] {
+	width: auto;
+}
+
+[type="file"],
+[type="color"],
+[type="image"],
+[type="range"] {
+	border: none;
+	border-bottom: none; /* Firefox bug with range */
+	cursor: pointer;
+}
+
+[type="checkbox"],
+[type="radio"] { /* Reminder: https://coderwall.com/p/a7tbrq/protip-if-you-want-to-style-checkboxes-radio-buttons-or-select-menus-in-firefox-don-t-bother */
+	height: 1.25rem;
+	width: 1.25rem;
+	padding: 0;
+	margin: 0.5rem;
+	vertical-align: -0.75rem; /* - (margin + (height - 1rem)) */
+	/*background: inherit;*/
+	position: relative;
+	background: none !important;
+	border: none !important;
+	box-shadow: none !important;
+	display: inline-block;
+	cursor: pointer;
+	outline: none !important;
+}
+
+/* Skin */
+input,
+textarea,
+select {
+	color: currentColor;
+	/*background-color: transparent;*/
+	background-color: var(--background-color-close, #FFFFFF);
+	background-clip: padding-box;
+	border: 1px solid rgba(125,125,125,0.3);
+	border-radius: 3px;
+	transition: border-color 0.20s ease-in-out, box-shadow 0.20s ease-in-out;
+}
+
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+	opacity: 0.6;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	outline: none;
+	border-color: var(--primary-color, #0071AD);
+	box-shadow: 0 0 0 1px var(--primary-color, #0071AD) inset;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+	background-color: rgba(125,125,125,0.1);
+	color: currentColor;
+	cursor: default;
+}
+
+input:required,
+textarea:required,
+select:required {
+	border-color: initial;
+	box-shadow: none;
+}
+
+input:not(:focus):invalid,
+textarea:not(:focus):invalid,
+select:not(:focus):invalid {
+	border-color: var(--danger-color, #DE2A2A);
+	box-shadow: 0 0 0 1px var(--danger-color, #DE2A2A) inset;
+}
+
+/* ===============================
+	      Alternate input
+   =============================== */
+
+.input-alternate {
+	border-color: transparent;
+	border-bottom-color: rgba(125,125,125,0.3);
+	border-radius: 0 !important;
+	background: transparent no-repeat;
+	background-image: linear-gradient(to bottom, var(--primary-color, #0071AD), var(--primary-color, #0071AD));
+	background-size: 0 2px;
+	background-position: 50% 100%;
+	transition: border-bottom-color 0.25s ease-in-out, background-size 0.25s ease-in-out;
+}
+
+.input-alternate:focus {
+	border-color: transparent;
+	border-bottom-color: transparent;
+	box-shadow: none !important;
+	background-size: 100% 2px;
+}
+
+.input-alternate:not(:focus):invalid {
+	border-color: transparent;
+	box-shadow: none !important;
+	border-bottom-color: transparent;
+	background-image: linear-gradient(to bottom, var(--danger-color, #DE2A2A), var(--danger-color, #DE2A2A));
+	background-size: 100% 2px;
+}
+
+/* ===============================
+	      Floating labels
+   =============================== */
+.floating-label {
+	position: relative;
+	width: 100%;
+	margin-top: 1rem;
+}
+
+.floating-label input:placeholder-shown + .floating-label-text,
+.floating-label textarea:placeholder-shown + .floating-label-text {
+	position: absolute;
+	top: 0.75rem;
+	left: 1rem;
+	opacity: 0.5;
+	transition: all 0.3s ease-in-out;
+}
+
+.floating-label input:not(:placeholder-shown) + .floating-label-text,
+.floating-label textarea:not(:placeholder-shown) + .floating-label-text {
+	position: absolute;
+	top: -0.75rem;
+	color: currentColor;
+	font-size: 0.8rem;
+	opacity: 1;
+	transition: all 0.3s ease-in-out;
+}
+
+.floating-label input:not(:placeholder-shown):focus + .floating-label-text,
+.floating-label textarea:not(:placeholder-shown):focus + .floating-label-text {
+	color: var(--primary-color, #0071AD);
+}
+
+.floating-label input:not(:placeholder-shown):not(:focus):invalid + .floating-label-text,
+.floating-label textarea:not(:placeholder-shown):not(:focus):invalid + .floating-label-text {
+	color: var(--danger-color, #DE2A2A);
+}
+
+.floating-label .floating-label-error,
+.floating-label .floating-label-error {
+	position: absolute;
+    bottom: -0.75rem;
+	opacity: 0;
+	color: var(--danger-color, #DE2A2A);
+	transition: all 0.3s ease-in-out;
+	font-size: 0.8rem;
+}
+
+.floating-label input:not(:placeholder-shown):not(:focus):invalid ~ .floating-label-error,
+.floating-label textarea:not(:placeholder-shown):not(:focus):invalid ~ .floating-label-error {
+	opacity: 1;
+}
+
+/* ===============================
+	Checkboxes and radio buttons
+   =============================== */
+
+[type="checkbox"]::before,
+[type="radio"]::before,
+[type="checkbox"]::after,
+[type="radio"]::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	width: 1.25rem;
+	height: 1.25rem;
+	z-index: 1;
+	transition: all 0.3s ease-in-out;
+}
+
+/* Radio buttons */
+[type="radio"]::before {
+	border: 2px solid rgba(125,125,125,1);
+	border-radius: 50%;
+}
+
+[type="radio"]::after {
+	height: 0.625rem; /* (::before width) / 2 */
+	width: 0.625rem;
+	top: 0.3125rem; /* (::before width) / 4 */
+	left: 0.3125rem;
+	border-radius: 50%;
+	background-color: transparent;
+}
+
+[type="radio"]:checked::before {
+	border-color: var(--primary-color, #0071AD);
+}
+
+[type="radio"]:checked::after {
+	background-color: var(--primary-color, #0071AD);
+}
+
+/* Checkboxes */
+[type="checkbox"]::after {
+	border: 2px solid rgba(125,125,125,1);
+	border-radius: 3px;
+	background-color: transparent;
+}
+
+[type="checkbox"]::before {
+	top: 0.175rem;
+	left: 0.45rem;
+	height: 0.75rem;
+	width: 0.375rem; /* height / 2 */
+	border-bottom: 2px solid transparent;
+	border-right: 2px solid transparent;
+	transform: rotate(45deg);
+	z-index: 2;
+}
+
+[type="checkbox"]:checked::after {
+	background-color: var(--primary-color, #0071AD);
+	border-color: transparent;
+}
+
+[type="checkbox"]:not(.checkbox--alt):checked::before {
+	border-color: #FFFFFF;
+}
+
+/* Alternative .checkbox--alt checkboxes */
+.checkbox--alt::before {
+	transform: none !important;
+}
+
+.checkbox--alt:checked::after {
+	background-color: transparent !important;
+}
+
+.checkbox--alt:checked::before {
+	top: 0 !important;
+	left: 0.45rem !important;
+	height: 1rem !important;
+	width: 0.5rem !important; /* height / 2 */
+	transform: rotate(45deg) !important;
+	border-color: var(--primary-color, #0071AD);
+}
+
+/* Switches/Toggle buttons */
+.switch {
+	-webkit-appearance: none !important;
+	-moz-appearance: none !important;
+	appearance: none !important;
+	user-select: none;
+	-webkit-tap-highlight-color:transparent;
+	cursor: pointer;
+	display: inline-block;
+	color: transparent;
+	position: relative;
+	margin-right: 1.5rem;
+}
+
+.switch::after { /* Track */
+	content: "";
+	position: absolute;
+	display: block;
+	width: 2.5rem;
+	height: 1.25rem;
+	border-radius: 100px;
+	background-color: #AAAAAA;
+	opacity: 0.5;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.3) inset;
+	border:none !important;
+}
+
+.switch::before { /* Thumb */
+	content: "";
+	position: absolute;
+	display: block;
+	top: -0.125rem;
+	left: 0;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+	box-shadow: 0 0px 2px rgba(0,0,0,0.1), 0 2px 2px rgba(0,0,0,0.2);
+	z-index: 2;
+	border: none !important;
+	transform: initial !important;
+}
+
+.switch:checked::before {
+	left: 1rem;
+}
+
+.switch::before {
+	background-color: #FFFFFF;
+}
+
+.switch:checked::before,
+.switch:checked::after {
+	background-color: var(--primary-color, #0071AD);
+}
+
+.switch:disabled::after {
+	background-color: #AAAAAA;
+	opacity: 0.3;
+}
+
+.switch:disabled::before {
+	background-color: #E6E6E6;
+	opacity: 1;
+}
+
+/* ===============================
+	            Colors
+   =============================== */
+.is-primary:checked::before {
+	border-color: var(--primary-color, #0071AD);
+}
+
+.is-primary:checked::after,
+.is-primary.switch:checked::before {
+	background-color: var(--primary-color, #0071AD);
+}
+
+.is-accent:checked::before {
+	border-color: var(--accent-color, #FFC200);
+}
+
+.is-accent:checked::after,
+.is-accent.switch:checked::before {
+	background-color: var(--accent-color, #FFC200);
+}
+
+.is-danger:checked::before {
+	border-color: var(--danger-color, #DE2A2A);
+}
+
+.is-danger:checked::after,
+.is-danger.switch:checked::before  {
+	background-color: var(--danger-color, #DE2A2A);
+}
+
+.is-alert:checked::before {
+	border-color: var(--alert-color, #C44F0C);
+}
+
+.is-alert:checked::after,
+.is-alert.switch:checked::before  {
+	background-color: var(--alert-color, #C44F0C);
+}
+
+.is-success:checked::before {
+	border-color: var(--success-color, #5C7E28);
+}
+
+.is-success:checked::after,
+.is-success.switch:checked::before  {
+	background-color: var(--success-color, #5C7E28);
+}input[type="checkbox"].navbar-burger {
+	position: absolute;
+	left: -200vw;
+	opacity: 0;
+}
+
+.navbar-burger {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	order: 9999;
+	/*margin: 1rem;*/
+	width: 1.5rem;
+	height: 1.5rem;
+	padding: 0;
+	/* outline: 0 !important; */
+	border: 0;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	background-color: transparent;
+	color: inherit;
+}
+
+.navbar-burger-bun {
+	position: relative;
+	will-change: transform;
+	transition: background ease-in-out 0.30s;
+}
+
+.navbar-burger-bun,
+.navbar-burger-bun::before,
+.navbar-burger-bun::after {
+	width: 100%;
+	height: 0.187rem; /* height / 8 */
+	border-radius: 3px;
+	display: inline-block;	
+	background: currentColor;
+}
+
+.navbar-burger-bun::before,
+.navbar-burger-bun::after {
+	content:"";
+	position: absolute;
+	left:0;
+	will-change: top, transform;
+	transition: transform ease-in-out 0.25s,
+ 				top ease-in-out 0.25s; /* using transition: all causes performance issues on firefox */
+}
+
+.navbar-burger-bun::before {
+	top: 0.375rem; /* height / 4 */
+}
+
+.navbar-burger-bun::after {
+	top: -0.375rem; /*  - height / 4 */
+}
+
+.navbar-burger:checked + .navbar-burger .navbar-burger-bun,
+.navbar-burger:focus .navbar-burger-bun {
+	background: transparent;
+}
+
+.navbar-burger:checked + .navbar-burger .navbar-burger-bun::before,
+.navbar-burger:checked + .navbar-burger .navbar-burger-bun::after,
+.navbar-burger:focus .navbar-burger-bun::before,
+.navbar-burger:focus .navbar-burger-bun::after {
+	top: 50%;
+}
+
+.navbar-burger:checked + .navbar-burger .navbar-burger-bun::before,
+.navbar-burger:focus .navbar-burger-bun::before {
+	transform: translate3d(0,-50%,0) rotate3d(0,0,1,45deg);
+}
+
+.navbar-burger:checked + .navbar-burger .navbar-burger-bun::after,
+.navbar-burger:focus .navbar-burger-bun::after {
+	transform: translate3d(0,-50%,0) rotate3d(0,0,1,-45deg);
+}
+
+/* Dots */
+/* .burger--dots */
+
+@media screen and (min-width: 44em) {
+	.desktop-only.burger--dots .navbar-burger-bun,
+	.desktop-only.burger--dots .navbar-burger-bun::before,
+	.desktop-only.burger--dots .navbar-burger-bun::after {
+		width: 0.187rem; /* height / 8 */
+		height: 0.187rem; /* height / 8 */
+		border-radius: 3px;
+		display: inline-block;	
+	}
+}
+
+/* Arrow left */
+
+/* Arrow right */
+
+/* Arrow top */
+
+/* Arrow bottom */
+
+/* Plus */
+
+/* Minus *//* Navbar
+   ========================================================================== */
+
+.navbar {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 1rem;
+	padding: 0 1rem;
+}
+.navbar > * {
+	align-self: center;
+}
+.navbar-menu,
+.navbar-burger {
+	justify-self: end;
+}
+.navbar-brand {
+	font-size: 1.75rem;
+	line-height: 1.75rem;
+	margin: 0;
+	padding: 0.5rem 0;
+}
+.navbar-menu {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: calc(-100vh - 100%);
+	right: 0;
+	margin: 0;
+	padding: 3rem;
+	width: 100%;
+	z-index: 100;
+	will-change: top;
+	transition: top ease-in-out 0.25s;
+	text-align: center;
+}
+.navbar-burger,
+.navbar-brand {
+	z-index: 200;
+}
+.navbar-menu a {
+	padding: 0.75rem;
+	width: 100%;
+	display: inline-block;
+}
+.navbar-burger:checked ~ .navbar-menu {
+	top: 0;
+}
+@media screen and (min-width: 44rem) {
+	.navbar-burger {
+		display: none !important;
+	}
+	.navbar-menu {		
+		flex-direction: row;
+		position: relative;
+		top: 0;
+		margin: 0;
+		padding: 0;
+		width: auto;
+	}
+}/* Navbar skin
+   ========================================================================== */
+
+.navbar {
+	background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0));
+	color: #fff;
+}
+.navbar a,
+.navbar a:hover {
+	color: currentColor;
+	text-decoration: none;
+	font-weight: 500;
+}
+.navbar-menu {
+	background: #121212;
+	border-bottom: 1px solid #010101;
+}
+.navbar-menu a:hover {
+	background: rgba(125,125,125,0.2);
+}
+.navbar-menu .active {
+	box-shadow: inset 2px 0 0 0; /* Inherits color, inset */
+	background: rgba(125,125,125,0.2);
+}
+@media screen and (min-width: 44rem) {
+	.navbar-menu {
+		background: transparent;
+		border: none;
+	}
+	.navbar-menu .active {
+		box-shadow: inset 0 2px 0 0; /* Inherits color, inset */
+		background: transparent;
+	}
+}/* Module : Scroller
+
+   <div class="scroller">
+   	   <a href="#" class="scroller-link" role="button" aria-label="Back to top"></a>
+   </div>
+
+   Needs croissant.js > Spoon: scroller-hide
+   ========================================================================== */
+
+:root {
+	--icon-scroller: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"18 15 12 9 6 15\"></polyline></svg>");
+}
+
+.layout { /* parent of scroller, ie body */
+	position: relative;
+}
+.scroller {
+	position: absolute;
+	top: 100vh;
+	right: 1rem;
+	bottom: 0;
+	width: 2.5rem;
+	z-index: 9999;
+	pointer-events: none;
+	/* Clip when there is too little content */
+	/* Clip is deprecated but clip-path doesn't works */
+	/*clip-path: inset(0 0 0 0); */
+	clip: rect(0, 2.5rem, auto, 0);
+}
+.scroller-link {
+	position: fixed; /* Fallback */
+	position: sticky;
+	top: calc(100vh - 3.5rem); /* positionning using height + .scroller right */
+	pointer-events: all;
+	cursor: pointer;
+
+	display: block;
+	background: var(--primary-color) var(--icon-scroller) no-repeat center center;
+	width: 2.5rem;
+	height: 2.5rem;
+}
+.scroller-link:hover,
+.scroller-link:focus {
+	-webkit-filter: saturate(95%) brightness(105%);
+	filter: saturate(95%) brightness(105%);
+}
+.scroller-link:active {
+	-webkit-filter: brightness(115%);
+	filter: brightness(115%);
+}
+@media print {
+	.scroller {
+		display: none !important;
+	}
+}
+:root .color-scheme-light {
+	--icon-color-scheme: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"5\"></circle><line x1=\"12\" y1=\"1\" x2=\"12\" y2=\"3\"></line><line x1=\"12\" y1=\"21\" x2=\"12\" y2=\"23\"></line><line x1=\"4.22\" y1=\"4.22\" x2=\"5.64\" y2=\"5.64\"></line><line x1=\"18.36\" y1=\"18.36\" x2=\"19.78\" y2=\"19.78\"></line><line x1=\"1\" y1=\"12\" x2=\"3\" y2=\"12\"></line><line x1=\"21\" y1=\"12\" x2=\"23\" y2=\"12\"></line><line x1=\"4.22\" y1=\"19.78\" x2=\"5.64\" y2=\"18.36\"></line><line x1=\"18.36\" y1=\"5.64\" x2=\"19.78\" y2=\"4.22\"></line></svg>");
+}
+
+blockquote {
+	margin: 1rem 0;
+	padding: 1rem 1rem;
+	background-color: var(--background-color-close);
+	border-left: 10px solid var(--main-color);
+	font-size: 1em;
+}
+code, kbd, pre, samp {
+	font-family: var(--font-monospace);
+	border-radius: 3px;
+	background: var(--background-color-close);
+}
+code {
+	padding: 0.10em 0.5em 0.25em 0.5em;
+	color: currentColor;
+	box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
+}
+a > code {
+	color: inherit;
+	box-shadow: none;
+	padding: 0;
+	background: transparent;
+}
+pre {
+	padding: 1em;
+}
+pre > code {
+	padding: 0;
+	background: transparent;
+	box-shadow: none;
+}
+samp {
+	display: block;
+	position: relative;
+	margin-bottom: 1rem;
+	padding: 1rem;
+	font-size: 1em;
+	white-space: pre-wrap;
+	background: rgba(0,0,0,0.8);
+	color: #fff;
+	box-shadow: 0 0px 2px rgba(0,0,0,0.1), 0px 2px 2px rgba(0,0,0,0.2);
+}
+samp::before {
+	content: ">";
+	position: absolute;
+	top: -0.2rem;
+	left: 0.2rem;
+	font-weight: bold;
+	color: rgba(255,255,255,0.2);
+}
+kbd {
+	display: inline-block;
+	font-size: 0.8em;
+	margin: 0 0.1em;
+	padding: 0.1em 0.6em;
+	border-radius: 3px;
+	background-color: #f7f7f7;
+	border: 1px solid #ccc;
+	box-shadow: 0px 2px 2px rgba(0,0,0,0.2),
+				0 0 0 2px #fff inset;
+	color: #333;
+	text-shadow: 0 1px 0 #fff;
+}
+.text-red {
+	color: var(--red-color);
+}
+.text-orange {
+	color: var(--orange-color);
+}
+
+/*	=============================================
+		Global Layout
+	============================================*/
+.layout {
+	min-height: 100vh;
+}
+.header {
+	grid-column: 1;
+	min-height: 3rem;
+	background: var(--background-color-close);
+	color: currentColor;
+}
+.content {
+	grid-column: 1;
+	padding: 1rem;
+}
+
+/* Navbar */
+.navbar {
+	font-family: var(--font-monospace);
+	font-weight: bold;
+	background: transparent;
+	color: currentColor;
+}
+.navbar .avatar,
+.navbar-social {
+	display: none;
+}
+.navbar-menu {
+	background: var(--background-color-close);
+	color: currentColor;
+	text-align: left;
+}
+.navbar-menu .active {
+	box-shadow: none;
+	color: var(--primary-color);
+}
+.navbar-menu a::before {
+	content: "cd /";
+	color: var(--main-color);
+	font-weight: normal;
+}
+.navbar-menu .active > *::before {
+	content: "# ";
+}
+.navbar-menu .active > *::after {
+	content: "|";
+	color: var(--main-color);
+	font-weight: bold;
+	animation-duration: 1s;
+	animation-name: blink;
+	animation-iteration-count: 30;
+	animation-timing-function: steps(2, start);
+}
+@keyframes blink {
+	80% { visibility: hidden; }
+}
+.color-scheme-toggle::after {
+	content: " => 'theme'";
+	position: relative;
+	left: 32px;
+}
+
+/* Desktop */
+@media all and (min-width: 44rem) {
+	.layout {
+		/* Required because content width is not fixed
+		and would overflow with a long pre… */
+		display: grid;
+		grid-template-columns: 12rem calc(100vw - 12rem);
+		gap: 0;
+	}
+	.header {
+		align-self: start;
+		position: sticky;
+		top: 0;
+		height: 100vh;
+		overflow: hidden;
+		overflow-y: auto;
+		padding-top: 1rem;
+	}
+	.content {
+		grid-column: 2;
+		margin-bottom: 0;
+		padding: 1rem 4rem;
+	}
+	.navbar {
+		grid-template-columns: 100%;
+	}
+	.navbar .avatar,
+	.navbar-social {
+		display: block;
+		max-width: 50%;
+		height: auto;
+		margin: 0 auto;
+		margin-bottom: 1rem;
+	}
+	.navbar-brand {
+		text-align: center;
+		word-break: break-word;
+	}
+	.navbar-menu {
+		flex-direction: column;
+		width: 100%;
+	}
+}
+@media all and (min-width: 70rem) {
+	.layout {
+		/* Required because content width is not fixed
+		and would overflow with a long pre… */
+		grid-template-columns: 20rem calc(100vw - 20rem);
+	}
+	.template-blopages .content,
+	.template-blog .content {
+		max-width: 50rem;
+		margin: 0 auto;
+	}
+}
+@media (prefers-color-scheme: light) and (min-width: 44rem) {
+	.header {
+		box-shadow: 2px 0 2px rgba(0,0,0,0.1), 1px 0 2px rgba(0,0,0,0.2);
+	}
+}
+.color-scheme-light .header {
+	box-shadow: 2px 0 2px rgba(0,0,0,0.1), 1px 0 2px rgba(0,0,0,0.2);
+}
+
+/* Content */
+.content a,
+.navbar-menu a,
+.navbar-menu a:hover {
+	font-weight: bold;
+}
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+	font-family: var(--font-monospace);
+	font-weight: bold;
+}
+.content h1 { font-size: 2rem; }
+.content h2 { font-size: 1.75rem; }
+.content h3 { font-size: 1.5rem; }
+.content h4 { font-size: 1.25rem; }
+.content h5 { font-size: 1.15rem; }
+.content h6 { font-size: 1rem; }
+
+/*	=============================================
+		Templates
+	============================================*/
+
+/* 	~~~~~~~~~~~~~~~~~~~~~~~~~
+	Template Blogpages & Blog
+	~~~~~~~~~~~~~~~~~~~~~~~*/
+.blog-post {
+	margin-bottom: 1rem;
+}
+.blog-post .p-name {
+	font-size: 1.15rem;
+}
+.blog-post .p-name a {
+	font-weight: normal;
+}
+.blog-post,
+.post .post-meta {
+	display: flex;
+	align-items: baseline;
+	gap: 1rem;
+}
+.post .post-meta {
+	justify-content: space-between;
+}
+.post .dt-published {
+	margin-left: 1rem;
+}
+.dt-published,
+.blog-post .p-name,
+.post .p-author {
+	font-family: var(--font-monospace);
+}
+
+/* 	~~~~~~~~~~~~~~~~~~~~~~~~~
+	Template Projects
+	~~~~~~~~~~~~~~~~~~~~~~~*/
+.template-projects .content ul {
+	column-count: 1;
+	gap: 1rem;
+	list-style: none;
+}
+.template-projects .content ul li {
+	display: block;
+	width: 100%;
+	height: auto;
+	background: var(--background-color-close);
+	box-shadow: 0 0 2px rgba(0,0,0,0.1), 0 2px 2px rgba(0,0,0,0.2);
+	margin-bottom: 1rem;
+	padding: 1rem;
+}
+
+@media all and (min-width: 44rem) {
+	.template-projects .content ul {
+		column-count: 2;
+	}
+}
+
+/*	=============================================
+		Print styles
+	============================================*/
+@media print {
+	body {
+		background: white;
+		color: black;
+	}
+	a {
+		color: black;
+	}
+	.layout,
+	.content {
+		display: block;
+	}
+	.header,
+	.footer,
+	aside {
+		display: none;
+	}
+	.post {
+ 		text-align: justify;
+ 		font-size: 12pt;
+	}
+	.post > * {
+		widows: 2;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		page-break-after: avoid;
+	}
+
+}
+
+@page {
+	padding: 0;
+	margin: 2.5cm 3cm 3cm 2.5cm;
+	size: A4 portrait;
+}
+
+/*	=============================================
+		Yellow styles
+	============================================*/
+.content .notice1 {
+	margin: 1rem 0;
+	padding: 1rem 1rem;
+	background-color: var(--background-color-close);
+	border-left: 10px solid var(--success-color);
+}
+.color-scheme-light .content .notice1 {
+	box-shadow: 1px 0 2px rgba(0,0,0,0.1), 1px 0 2px rgba(0,0,0,0.2);
+}
+
+/*	=============================================
+		Yellow Edit
+	============================================*/
+.yellow-bar {
+	position: absolute !important;
+	top: 1rem;
+	width: 100%;
+	z-index: 999;
+}
+
+.yellow-bar-content {
+	display: flex;
+}
+
+.yellow-bar-left,
+.yellow-bar-right {
+	background-color: #fff;
+	padding: 0.5rem 1rem;
+	border-radius: 3px;
+}
+
+.yellow-bar-left {
+	align-self: flex-start;
+}
+
+.yellow-bar-right {
+	align-self: flex-end;
+}
+
+.yellow-edit-text {
+	background-color: initial;
+}
+
+
+/*	=============================================
+		Prism styles
+	============================================*/
+code[class*="language-"],
+pre[class*="language-"] {
+	font-family: var(--font-monospace) !important;
+}

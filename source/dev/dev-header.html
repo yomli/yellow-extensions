@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="<?= $this->yellow->page->getHtml("language") ?>">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+	<title><?= $this->yellow->page->getHtml("titleHeader") ?></title>
+	<meta name="description" content="<?= $this->yellow->page->getHtml("description") ?>" />
+	<meta name="author" content="<?= $this->yellow->page->getHtml("author") ?>" />
+	<meta name="generator" content="Datenstrom Yellow" />
+
+	<?php
+		$yellowThemeLocation = $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("CoreThemeLocation");
+	?>
+
+	<!-- Favicons -->
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="manifest" href="/manifest.webmanifest">
+
+	<!-- Apple Web App Meta -->
+	<link rel="apple-touch-icon" sizes="180x180" href="<?= $yellowThemeLocation ?>assets/favicon/apple-touch-icon.png">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- Microsoft Tiles -->
+	<meta name="msapplication-TileColor" content="#F03331">
+    <meta name="theme-color" content="#F03331">
+
+    <link type="text/plain" rel="author" href="/humans.txt" />
+
+	<?= $this->yellow->page->getExtra("header") ?>
+
+	<?php if($this->yellow->page->get("layout") == "blog"): ?>
+	<!-- CSS -->
+	<link href="<?= $yellowThemeLocation ?>assets/css/prism.css" rel="stylesheet" />
+	<?php endif ?>
+
+	<!-- Javascript -->
+	<noscript>
+		<style>
+			.color-scheme-toggle { display: none; }
+		</style>
+	</noscript>
+</head>
+<body class="layout template-<?= $this->yellow->page->get("layout") ?>">
+
+	<header class="header" role="banner">
+		<nav class="navbar">
+			<h1 class="navbar-brand">
+				<a href="/" title=""><img src="<?= $yellowThemeLocation ?>assets/img/profil-yomli.png" class="avatar u-photo photo" />
+					{<span class="text-red">dev</span>: <span class="text-orange">"yomli"</span>}
+				</a>
+			</h1>
+
+			<!-- Bad semantic but pure CSS -->
+			<input type="checkbox" id="navigation-burger" class="navbar-burger" aria-hidden="true">
+			<label for="navigation-burger" class="navbar-burger">
+				<span class="navbar-burger-bun"></span>
+			</label>
+
+			<?php $this->yellow->layout("navigation") ?>
+		</nav>
+	</header>

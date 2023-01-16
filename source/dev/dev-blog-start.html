@@ -1,0 +1,31 @@
+<?php $this->yellow->layout("header") ?>
+<main id="content" class="content" role="main">
+	<?php if (!empty($this->yellow->page->get("titleContent"))): ?>
+	<h2 class="content-title"><?= $this->yellow->page->getHtml("titleContent") ?></h2>
+	<?php elseif (!empty($this->yellow->page->get("title"))): ?>
+	<h2 class="content-title"><?= $this->yellow->page->getHtml("title") ?></h2>
+	<?php endif ?>
+
+	<?php $lastYear = ""; $count = 0; ?>
+	<?php foreach ($this->yellow->page->getPages("blog") as $page): 
+			$year = $page->getDateFormatted("published", "Y"); 
+	?>
+	<?php if ($year != $lastYear): 
+			$lastYear = $year;
+	?>
+		<?php if ($count >= 1): ?>
+		</ul>
+
+		<?php else: $count++; endif; ?>
+	<h3><?= $year ?></h3>
+		<ul class="list-unstyled">
+	<?php endif ?>
+			<li class="blog-post h-entry">
+				<time datetime="<?= $page->getDateFormattedHtml("published", "c") ?>" class="dt-published"><?= $page->getDateFormattedHtml("published", "m/d") ?></time><span class="p-name"><a href="<?= $page->getUrl() ?>" class="u-url"><?= $page->getHtml("TitleContent") ?></a></span>
+			</li>
+	<?php endforeach ?>
+
+	<?php $this->yellow->layout("pagination", $this->yellow->page->getPages("blog")) ?>
+
+</main>
+<?php $this->yellow->layout("footer") ?>

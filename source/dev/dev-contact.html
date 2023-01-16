@@ -1,0 +1,50 @@
+<?php $this->yellow->layout("header") ?>
+<main id="content" class="content" role="main">
+		<article class="static">
+			<header>
+				<h2><?= $this->yellow->page->getHtml("titleContent") ?></h2>
+			</header>
+			<?= $this->yellow->page->getContent() ?>
+		</article>
+</main>
+<!-- Form submit -->
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+
+		var contact = document.getElementById('contact-form');
+		var formStatus = document.getElementById('contact-submit');
+
+		document.getElementsByTagName('form')[0].addEventListener('submit', (e) => {
+			e.preventDefault();
+
+			formStatus.value = 'Envoi du message…';
+
+			let form = e.target;
+
+			var xhr = new XMLHttpRequest();
+			xhr.open(form.method, form.action, true);
+			//xhr.setRequestHeader('Accept', 'application/json; charset=utf-8');
+			//xhr.setRequestHeader('Content-Type', 'application/x-form-urlencoded');
+
+			//console.log(JSON.parse(JSON.stringify(Object.fromEntries(new FormData(form)))));
+
+			xhr.send(new FormData(form));
+
+			xhr.onloadend = function (response) {
+				formStatus.value = response.target.responseText;
+				if (response.target.status === 0) {
+					// Failed XmlHttpRequest should be considered an undefined error.
+					formStatus.value = 'Erreur inconnue';
+					formStatus.className += ' is-alert';
+				} else if (response.target.status === 400) {
+					// Bad Request
+					formStatus.className += ' is-danger';
+				} else if (response.target.status === 200) {
+					// Success
+					formStatus.className += ' is-success';
+				}
+			};
+        });
+      });
+</script>
+<?php $this->yellow->layout("footer") ?>

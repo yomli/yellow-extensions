@@ -1,0 +1,20 @@
+<?php $this->yellow->layout("header") ?>
+	<main id="content" class="content h-entry">
+		<article class="post e-content">
+			<header>				
+				<h1 class="post-title p-name"><a href="<?= $this->yellow->page->getUrl() ?>" class="u-url"><?= $this->yellow->page->getHtml("TitleContent") ?></a></h1>
+				<p class="post-meta">
+					<?php $authorCounter = 0; foreach (preg_split("/\s*,\s*/", $this->yellow->page->get("author")) as $author) { if (++$authorCounter>1) echo ", "; echo "<a href=\"".$this->yellow->page->getPage("blog")->getLocation(true).$this->yellow->toolbox->normaliseArguments("author:$author")."\" class=\"author p-author\" rel=\"author\">".htmlspecialchars($author)."</a>"; } ?>
+					<time datetime="<?= $this->yellow->page->getDateFormattedHtml("published", "c") ?>" class="dt-published">
+					<?= $this->yellow->page->getDateFormattedHtml("published", "j F Y") ?>
+					</time>
+				</p>
+			</header>
+			
+			<?= $this->yellow->page->getContent() ?>
+				
+		</article>
+	</main>
+
+	<script type="text/javascript" src="<?= $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("CoreThemeLocation") ?>assets/js/prism.js"></script>
+<?php $this->yellow->layout("footer") ?>

@@ -14,13 +14,13 @@
 			</div>
 		<?php endif ?>
 			<h1 class="book-title"><a href="<?= $page->getLocation(true) ?>"><?= $page->getHtml("TitleContent") ?></a></h1>
-			<p class="book-author">par <a href="d"><?= $page->getHtml("author") ?></a></p>
+			<p class="book-author">par <?php $authorCounter = 0; foreach (preg_split("/\s*,\s*/", $page->get("author")) as $author) { if (++$authorCounter>1) echo ", "; echo "<a href=\"".$this->yellow->page->getLocation(true).$this->yellow->lookup->normaliseArguments("author:$author")."\">".htmlspecialchars($author)."</a>"; } ?></p>
 			<div class="book-description">
 			<?php if (!empty($page->get("description"))): ?>
-				<?= $page->get("description") ?>		
+				<?= $page->get("description") ?>
 			<?php else: ?>
 				<?= $this->yellow->toolbox->createTextDescription($page->getContent(), 0, true, "<!--more-->", "") ?>
-			<?php endif ?> <a href="<?= $page->getLocation(true) ?>" aria-label="Lire la suite">Lire la suite</a></div>	
+			<?php endif ?> <a href="<?= $page->getLocation(true) ?>" aria-label="Lire la suite">Lire la suite</a></div>
 	</article>
 	<?php endforeach ?>
 

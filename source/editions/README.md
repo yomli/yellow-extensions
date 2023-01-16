@@ -1,4 +1,4 @@
-Editions 0.8.21.1
+Editions 0.8.21.2
 ==============
 
 Editions is a simple theme for [Datenstrom Yellow](https://datenstrom.se/yellow/) using [Croissant](https://github.com/yomli/croissant/). It is in use here: <https://editions.yom.li/>

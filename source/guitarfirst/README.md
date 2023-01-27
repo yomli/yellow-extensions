@@ -1,4 +1,4 @@
-GuitarFirst 0.8.21.1
+GuitarFirst 0.8.21.2
 ==============
 
 GuitarFirst is an advanced theme for [Datenstrom Yellow](https://datenstrom.se/yellow/) using [Croissant](https://github.com/yomli/croissant/). It is in use here: <https://www.ericlitaudon.fr/>

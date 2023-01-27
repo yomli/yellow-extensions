@@ -2,7 +2,7 @@
 // Basic extension, https://github.com/schulle4u/yellow-extension-basic
 
 class YellowDev {
-    const VERSION = "0.8.21.1";
+    const VERSION = "0.8.21.2";
     public $yellow;         // access to API
 
     // Handle initialisation
@@ -170,45 +170,40 @@ class YellowDev {
                 $pages->filter("author", $page->getRequest("author"));
                 array_push($pagesFilter, $pages->getFilter());
             }
-            if ($page->isRequest("language")) {
-                $pages->filter("language", $page->getRequest("language"));
-                array_push($pagesFilter, $pages->getFilter());
-            }
-            if ($page->isRequest("folder")) {
-                $pages->match("#".$page->getRequest("folder")."#i", false);
-                array_push($pagesFilter, ucfirst($page->getRequest("folder")));
-            }
             $feedFilterLayout = $this->yellow->system->get("devFeedFilterLayout");
-            if ($feedFilterLayout!="none") $pages->filter("layout", $feedFilterLayout);
+            if (!empty($feedFilterLayout)) $pages->filter("layout", $feedFilterLayout);
             $chronologicalOrder = ($this->yellow->system->get("devFeedFilterLayout")!="blog");
             if ($this->isRequestXml($page)) {
                 $pages->sort($chronologicalOrder ? "modified" : "published", false);
-                $entriesMax = $this->yellow->system->get("devFeedPaginationLimit");
-                if ($entriesMax==0 || $entriesMax>100) $entriesMax = 100;
-                $pages->limit($entriesMax);
-                $title = !is_array_empty($pagesFilter) ? implode(" ", $pagesFilter)." - ".$this->yellow->page->get("sitename") : $this->yellow->page->get("sitename");
+                $pages->limit($this->yellow->system->get("devFeedPaginationLimit"));
+                $title = !empty($pagesFilter) ? implode(" ", $pagesFilter)." - ".$this->yellow->page->get("sitename") : $this->yellow->page->get("sitename");
                 $this->yellow->page->setLastModified($pages->getModified());
                 $this->yellow->page->setHeader("Content-Type", "application/rss+xml; charset=utf-8");
-                $output = "<?xml version=\"1.0\" encoding=\"UTF-8\"\077>\r\n";
+                $urlBase = $this->yellow->page->scheme."://".$this->yellow->page->address.$this->yellow->page->base."/";
+                $output = "<?xml version=\"1.0\" encoding=\"utf-8\"\077>\r\n";
                 $output .= "<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\r\n";
                 $output .= "<channel>\r\n";
-                $output .= "<atom:link href=\"".$this->yellow->page->getUrl().$this->yellow->lookup->normaliseArguments("page:".$this->yellow->system->get("devFeedFileXml"), false)."\" rel=\"self\" type=\"application/rss+xml\" />";
                 $output .= "<title>".htmlspecialchars($title)."</title>\r\n";
-                $output .= "<link>".$this->yellow->page->scheme."://".$this->yellow->page->address.$this->yellow->page->base."/"."</link>\r\n";
-                $output .= "<description><![CDATA[".$this->yellow->page->getHtml("description")."]]></description>\r\n";
+                $output .= "<atom:link href=\"" . $this->yellow->page->getUrl() . $this->yellow->lookup->normaliseArguments("page:" . $this->yellow->system->get("devFeedFileXml"), false) . "\" rel=\"self\" type=\"application/rss+xml\" />\r\n";
+                $output .= "<link>".$urlBase."</link>\r\n";
+                $output .= "<description>".$this->yellow->page->getHtml("description")."</description>\r\n";
                 $output .= "<language>".$this->yellow->page->getHtml("language")."</language>\r\n";
                 $output .= "<copyright>".$this->yellow->page->getHtml("author")."</copyright>\r\n";
                 foreach ($pages as $pageFeed) {
                     $timestamp = strtotime($pageFeed->get($chronologicalOrder ? "modified" : "published"));
-                    // $content = $this->yellow->toolbox->createTextDescription($pageFeed->getContent(), 0, false, "<!--more-->", "<a href=\"".$pageFeed->getUrl()."\">".$this->yellow->language->getTextHtml("blogMore")."</a>");
+                    // Absolute path in content -_-
+                    // DO NOT USE UNICODE IN RELATIVE URL
                     $content = $pageFeed->getContent();
+                    $content = preg_replace('/src="(\/)([\pL\pM _()$&\'0-9\/!@^=+*-.]*)"/i', 'src="'.$this->yellow->page->scheme."://".$this->yellow->page->address.'/${2}"', $content);
+                    $content = preg_replace('/href="(\/)([\pL\pM _()$&\'0-9\/!@^=+*-.]*)"/i', 'href="'.$this->yellow->page->scheme."://".$this->yellow->page->address.'/${2}"', $content);
+
                     $output .= "<item>\r\n";
                     $output .= "<title>".$pageFeed->getHtml("title")."</title>\r\n";
                     $output .= "<link>".$pageFeed->getUrl()."</link>\r\n";
                     $output .= "<pubDate>".date(DATE_RSS, $timestamp)."</pubDate>\r\n";
                     $output .= "<guid isPermaLink=\"false\">".$pageFeed->getUrl()."?".$timestamp."</guid>\r\n";
                     $output .= "<dc:creator>".$pageFeed->getHtml("author")."</dc:creator>\r\n";
-                    $output .= "<description>".$pageFeed->getHtml("description")."</description>\r\n";
+                    $output .= "<description><![CDATA[".$pageFeed->get("description")."]]></description>\r\n";
                     $output .= "<content:encoded><![CDATA[".$content."]]></content:encoded>\r\n";
                     if ($pageFeed->isExisting("tag")) {
                         foreach (preg_split("/\s*,\s*/", $pageFeed->get("tag")) as $tag) {
@@ -221,8 +216,10 @@ class YellowDev {
                 $output .= "</rss>\r\n";
                 $this->yellow->page->setOutput($output);
             } else {
-                $pages->sort($chronologicalOrder ? "modified" : "published", false);
-                if (!is_array_empty($pagesFilter)) {
+                $pages->sort($chronologicalOrder ? "modified" : "published");
+                $pages->paginate($this->yellow->system->get("devFeedPaginationLimit"));
+                if (!$pages->getPaginationNumber()) $this->yellow->page->error(404);
+                if (!empty($pagesFilter)) {
                     $text = implode(" ", $pagesFilter);
                     $this->yellow->page->set("titleHeader", $text." - ".$this->yellow->page->get("sitename"));
                     $this->yellow->page->set("titleContent", $this->yellow->page->get("title").": ".$text);
@@ -239,9 +236,9 @@ class YellowDev {
     public function onParsePageExtra($page, $name) {
         $output = null;
         if ($name=="header") {
-            $locationFeed = $this->yellow->system->get("coreServerBase").$this->yellow->system->get("devFeedLocation");
-            $locationFeed .= $this->yellow->lookup->normaliseArguments("page:".$this->yellow->system->get("devFeedFileXml"), false);
-            $output = "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"$locationFeed\" />\n";
+            $locationFeed = $this->yellow->system->get("coreServerBase") . $this->yellow->system->get("devFeedLocation");
+            $locationFeed .= $this->yellow->lookup->normaliseArguments("page:" . $this->yellow->system->get("devFeedFileXml"), false);
+            $output = "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"" . $this->yellow->system->get("devFeedTitle") . "\" href=\"$locationFeed\" />\n";
         }
         return $output;
     }

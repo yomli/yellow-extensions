@@ -4,5 +4,5 @@
 				<?php foreach ($pages as $page): ?>
 				<li<?= $page->isActive() ? " class=\"active\" aria-current=\"page\"" : "" ?>><a href="<?= $page->getLocation(true) ?>"><?= $page->getHtml("titleNavigation") ?></a></li>
 				<?php endforeach ?>
-				<li><button type="button" class="color-scheme-toggle rounded-circle"></button></li>
+				<li><button type="button" aria-hidden="true" class="color-scheme-toggle rounded-circle"></button></li>
 			</ul>

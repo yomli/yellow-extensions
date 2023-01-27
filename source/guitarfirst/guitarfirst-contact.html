@@ -12,42 +12,39 @@
 </main>
 <!-- Form submit -->
 <script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', function() {
+	'use strict';
+	document.addEventListener('DOMContentLoaded', () => {
+		let contact = document.querySelector('form');
+		let status = document.querySelector('[type=submit]');
 
-		var contact = document.getElementById('contact-form');
-		var formStatus = document.getElementById('contact-submit');
+		if (contact) {
+			contact.addEventListener('submit', (e) => {
+				e.preventDefault();
+	
+				status.value = 'Envoi du message…';
 
-		document.getElementsByTagName('form')[0].addEventListener('submit', (e) => {
-			e.preventDefault();
+				let form = e.target;
+				
+				var xhr = new XMLHttpRequest();
+				xhr.open(form.method, form.action, true);
+				xhr.send(new FormData(form));
 
-			formStatus.value = 'Envoi du message…';
-
-			let form = e.target;
-
-			var xhr = new XMLHttpRequest();
-			xhr.open(form.method, form.action, true);
-			//xhr.setRequestHeader('Accept', 'application/json; charset=utf-8');
-			//xhr.setRequestHeader('Content-Type', 'application/x-form-urlencoded');
-
-			//console.log(JSON.parse(JSON.stringify(Object.fromEntries(new FormData(form)))));
-
-			xhr.send(new FormData(form));
-
-			xhr.onloadend = function (response) {
-				formStatus.value = response.target.responseText;
-				if (response.target.status === 0) {
-					// Failed XmlHttpRequest should be considered an undefined error.
-					formStatus.value = 'Erreur inconnue';
-					formStatus.className += ' is-alert';
-				} else if (response.target.status === 400) {
-					// Bad Request
-					formStatus.className += ' is-danger';
-				} else if (response.target.status === 200) {
-					// Success
-					formStatus.className += ' is-success';
-				}
-			};
-        });
-      });
+				xhr.onloadend = (res) => {
+					status.value = res.target.responseText;
+					if (res.target.status === 0) {
+						// Failed XmlHttpRequest should be considered an undefined error.
+						status.value = 'Erreur inconnue';
+						status.className += ' is-alert';
+					} else if (res.target.status !== 200) {
+						// Bad Request
+						status.className += ' is-danger';
+					} else if (res.target.status === 200) {
+						// Success
+						status.className += ' is-success';
+					}
+				};
+			}, false);
+		}	
+	}, false);
 </script>
 <?php $this->yellow->layout("footer") ?>

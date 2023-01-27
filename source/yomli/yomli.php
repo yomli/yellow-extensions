@@ -2,7 +2,7 @@
 // Basic extension, https://github.com/schulle4u/yellow-extension-basic
 
 class YellowYomli {
-    const VERSION = "0.8.21.4";
+    const VERSION = "0.8.21.5";
     public $yellow;         // access to API
 
     // Handle initialisation

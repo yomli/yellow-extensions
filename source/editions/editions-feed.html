@@ -1,0 +1,22 @@
+<?php $this->yellow->layout("header") ?>
+<main id="content" class="content" role="main">
+		<article class="static">
+			<header>
+				<h2><?= $this->yellow->page->getHtml("titleContent") ?></h2>
+			</header>
+			<ul>
+				<?php $section = $sectionNew = "" ?>
+				<?php foreach ($this->yellow->page->getPages("feed") as $page): ?>
+				<?php if ($this->yellow->page->get("feedChronologicalOrder")): ?>
+				<?php $sectionNew = $page->getDateHtml("modified") ?>
+				<?php else: ?>
+				<?php $sectionNew = $page->getDateHtml("published") ?>
+				<?php endif ?>
+				<?php if ($section!=$sectionNew) { $section = $sectionNew; echo "</ul><h2>$section</h2><ul>\n"; } ?>
+				<li><a href="<?= $page->getLocation(true) ?>"><?= $page->getHtml("title") ?></a></li>
+				<?php endforeach ?>
+			</ul>
+			<?php $this->yellow->layout("pagination", $this->yellow->page->getPages("feed")) ?>
+		</article>
+</main>
+<?php $this->yellow->layout("footer") ?>

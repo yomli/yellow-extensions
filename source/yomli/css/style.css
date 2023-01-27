@@ -52,6 +52,10 @@
 	min-height: 8rem;
 }
 
+.navbar {
+	background: linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,0));
+}
+
 @media all and (min-width: 44rem) {
 	.header {
 		min-height: 12rem;

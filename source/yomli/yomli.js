@@ -1,15 +1,16 @@
 var ready = function() {
 	'use strict';
-/* See comments of https://dev.to/mrahmadawais/use-instead-of-document-queryselector-all-in-javascript-without-jquery-3ef1 */
-// const $ = (css, parent = document) => parent.querySelector(css);
-// const $$ = (css, parent = document) => Array.from(parent.querySelectorAll(css));
-const $ = (q, d = document) => 
-	/#\S+$/.test(q)							// check if query asks for ID
-	? d.querySelector.bind(d)(q)			// if so, return one element
-	: [...d.querySelectorAll.bind(d)(q)];	// else, return all elements in an array.
+	/*!
+	 * Vanille.js core
+	 * Licensed MIT (https://github.com/yomli/vanille/blob/main/LICENSE)
+	 */
+	const $ = (q, d = document) =>
+		/#\S+$/.test(q)
+		? d.querySelector.bind(d)(q)
+		: [...d.querySelectorAll.bind(d)(q)];
 
-const body = document.body;
-const html = document.documentElement;
+	const body = document.body;
+	const html = document.documentElement;
 /*
 	Spoon: scroller-hide
 	Hide scroller when viewport's height is superior to the content.
@@ -26,17 +27,17 @@ const html = document.documentElement;
 	var scrollerHeight;
 	for (var i = 0; i < scrollerButton.length; i++) {
 		scrollerHeight = scrollerButton[i].offsetHeight;
-	} 
+	}
 
 	window.addEventListener('resize', function(event) {
 		// Get viewport and page height
 		var vh = Math.max(html.clientHeight || 0, window.innerHeight || 0),
 			height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-	
+
 		var display = ( (vh + scrollerHeight) >= height ) ? 'none' : 'block';
 		for (var i = 0; i < scroller.length; i++) {
 			scroller[i].style.display = display;
-		} 
+		}
 	}, false);
 
 	// Trigger a resize event on load
@@ -110,7 +111,7 @@ const html = document.documentElement;
 	// Apply scheme on system change
 	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => e.matches && applyScheme('dark'));
 	window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => e.matches && applyScheme('light'));
-		
+
 })(window, document);
 
 }

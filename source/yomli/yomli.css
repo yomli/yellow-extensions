@@ -1,3 +1,7 @@
+/*!
+ * Croissant
+ * Licensed MIT (https://github.com/yomli/croissant/blob/main/LICENSE)
+ */
 :root {
 	color-scheme: light dark;
 
@@ -10,7 +14,7 @@
 }
 
 /* Automatic/Manual light mode */
-:root, 
+:root,
 :root .color-scheme-light {
 	--background-color: #FAFAFA;
 	--main-color: rgba(0,0,0,0.8);
@@ -111,7 +115,8 @@
 /* See https://web.dev/prefers-color-scheme/#re-colorize-and-darken-photographic-images */
 img:not([src*=".svg"]) {
 	filter: var(--image-filter);
-}/*!
+}
+/*
  * Rebase
  * Normalization of HTML elements
  * Forked from Bootstrap Reboot, licensed MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -126,20 +131,16 @@ img:not([src*=".svg"]) {
 	box-sizing: inherit; /* Inheriting box-sizing is better practice */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-	:root {
-		scroll-behavior: smooth;
-	}
-}
-
 @media (prefers-reduced-motion: reduce) {
 	* {
 		animation: none;
+		scroll-behavior: auto !important;
 	}
 }
 
 html {
 	box-sizing: border-box; /* Inheriting box-sizing is better practice */
+	font-size: 16px;
 	font-family: sans-serif;
 	line-height: 1.15;
 	-webkit-text-size-adjust: 100%;
@@ -170,8 +171,8 @@ body {
 	background-color: var(--background-color);
 	-webkit-text-size-adjust: 100%;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	scroll-behavior: smooth; /* Somewhat opiniated. */
 	overflow-x: hidden; /* Somewhat opiniated. */
+	scroll-behavior: smooth; /* Somewhat opiniated. */
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -545,7 +546,8 @@ progress {
 [hidden]
 .hidden {
   display: none !important;
-}/* Utilities */
+}
+/* Utilities */
 
 .inline-block { 
 	display: inline-block; 
@@ -724,7 +726,7 @@ mark,
 
 blockquote,
 .blockquote {
-    font-size: 1.25rem;
+	font-size: 1.25rem;
 }
 
 blockquote footer,
@@ -973,6 +975,12 @@ button.is-success,
 	color: var(--success-color, #5C7E28);
 }
 /* Module : color-scheme-toggle
+
+	<noscript>
+		<style>
+			.color-scheme-toggle { display: none; }
+		</style>
+	</noscript>
 
 	<button type="button" class="color-scheme-toggle rounded-circle"></button>
 
@@ -1554,7 +1562,8 @@ select:not(:focus):invalid {
    ========================================================================== */
 
 .navbar {
-	background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0));
+	/* background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0)); */
+	background: rgba(0,0,0,.8);
 	color: #fff;
 }
 .navbar a,
@@ -1583,7 +1592,8 @@ select:not(:focus):invalid {
 		box-shadow: inset 0 2px 0 0; /* Inherits color, inset */
 		background: transparent;
 	}
-}/* Module : Profile
+}
+/* Module : Profile
 
    <figure class="profile-picture">
        <img src="profile.png" class="avatar">
@@ -1854,6 +1864,10 @@ select:not(:focus):invalid {
 	width: 100%;
 	margin-bottom: 1rem;
 	min-height: 8rem;
+}
+
+.navbar {
+	background: linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,0));
 }
 
 @media all and (min-width: 44rem) {

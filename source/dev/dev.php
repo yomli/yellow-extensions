@@ -2,7 +2,7 @@
 // Basic extension, https://github.com/schulle4u/yellow-extension-basic
 
 class YellowDev {
-    const VERSION = "0.8.21.3";
+    const VERSION = "0.8.21.4";
     public $yellow;         // access to API
 
     // Handle initialisation
